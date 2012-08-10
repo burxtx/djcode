@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from mysite.views import hello,current_datetime,hours_ahead
 from django.contrib import admin
 from mysite.books.views import search
+from mysite.contact.views import contact
 admin.autodiscover()
 
 # Uncomment the next two lines to enable the admin:
@@ -23,5 +24,6 @@ urlpatterns = patterns('',
     ('^time/$', current_datetime),
     ('^hello/$', hello),
     (r'^search/$', search),
+    (r'^contact/$', contact),
     url(r'^blog/', include('mysite.blog.urls')),
 )

@@ -20,4 +20,7 @@ def contact(request):
             )
             return HttpResponseRedirect('/contact/thanks/')
     return render_to_response('contact_form.html',
-        {'errors': errors})
+        {'errors': errors,
+         'subject': request.POST.get('subject', ''),
+         'message': request.POST.get('message', ''),
+         'email': request.POST.get('email', ''),})
