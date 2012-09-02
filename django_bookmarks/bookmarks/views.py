@@ -2,10 +2,9 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-
+from django.template import RequestContext
 def main_page(request):
-    return render_to_response('main_page.html', 
-	{ 'user': request.user})
+    return render_to_response('main_page.html', RequestContext(request))
 
 def user_page(request, username):
     try:
