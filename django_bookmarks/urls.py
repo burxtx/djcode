@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', logout_page),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root':site_media }),
+    (r'^register/$', register_page),
 )
