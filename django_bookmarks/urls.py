@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from django_bookmarks.bookmarks.views import *
+from django.views.generic.simple import direct_to_template
 import os.path
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -23,4 +24,6 @@ urlpatterns = patterns('',
     (r'^logout/$', logout_page),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root':site_media }),
     (r'^register/$', register_page),
+    (r'^register/success/$', direct_to_template,
+        { 'template': 'registration/register_success.html' }),
 )

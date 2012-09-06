@@ -31,7 +31,7 @@ def register_page(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
                 )
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/register/success/')
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {
