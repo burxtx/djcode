@@ -1,3 +1,4 @@
+from django.contrib.auth.models import user
 from django.db import models
 
 class BlogPost(models.Model):
