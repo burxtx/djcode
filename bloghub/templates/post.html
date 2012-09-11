@@ -11,7 +11,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>{% block title %}{% endblock %} | Bloghub</title>
+  <title>* | Bloghub</title>
   
   <!-- Included CSS Files (Uncompressed) -->
   <!--
@@ -19,10 +19,10 @@
   -->
   
   <!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="/site_media/stylesheets/foundation.min.css">
-  <link rel="stylesheet" href="/site_media/stylesheets/app.css">
+  <link rel="stylesheet" href="stylesheets/foundation.min.css">
+  <link rel="stylesheet" href="stylesheets/app.css">
 
-  <script src="/site_media/javascripts/modernizr.foundation.js"></script>
+  <script src="javascripts/modernizr.foundation.js"></script>
 
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
@@ -35,19 +35,50 @@
   <div class="row">
     <div class="twelve columns">
       <h2>bloghub</h2>
-       <a href="/">home</a> |
-       {% if user.is_authenticated %}
-       welcome {{ user.username }}
-       (<a href="/logout">logout</a>)
-       {% else %}
-        <a href="/login/">login</a> |
-        <a href="/register/">register</a>
-       {% endif %}
+      <p>This is version <strong>0.0.1</strong> generated on August 20, 2012.</p>
       <hr />
     </div>
   </div>
-  {% block content %}{% endblock %}
-   
+
+  <div class="row">
+    <div class="eight columns">
+      <h3>bloglist</h3>
+
+      <!-- Grid Example -->
+      <div class="row">
+        <div class="twelve columns">
+          <div class="panel">
+            {% for post in posts %}
+            <h4>{{ post.title }}</h4>				
+            <p>{{ post.timestamp|date:"l, F jS" }}</p>
+            <p>{{ post.body }}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="four columns">
+      <h4>tags</h4>
+      <div class="row">
+      <div class="twelve columns">
+        <ul id="tracked_tags" class="has-flyout">
+          <li class="tracked_tag">tag1</li>
+          <li class="tracked_tag">tag2</li>
+        </ul>
+      </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <h4>search tags</h4>
+          <input type="text" placeholder="search tags...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
   <div class="row">
     <div class="twelve columns">
       <h3>Orbit</h3>
@@ -92,9 +123,9 @@
   -->
   
   <!-- Included JS Files (Compressed) -->
-  <script src="/site_media/javascripts/foundation.min.js"></script>
+  <script src="javascripts/foundation.min.js"></script>
   
   <!-- Initialize JS Plugins -->
-  <script src="/site_media/javascripts/app.js"></script>
+  <script src="javascripts/app.js"></script>
 </body>
 </html>

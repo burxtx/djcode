@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Welcome to bloghub{% endblock %}
+{% block content%}
+  {% if user.username %}
+	
+  <div class="row">
+    <div class="eight columns">
+      <h3>bloglist</h3>
+
+      <!-- Grid Example -->
+      <div class="row">
+        <div class="twelve columns">
+          <div class="panel">
+            {% for post in posts %}
+            <h4>{{ post.title }}</h4>				
+            <p>{{ post.timestamp|date:"l, F jS" }}</p>
+            <p>{{ post.body }}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="four columns">
+      <h4>tags</h4>
+      <div class="row">
+      <div class="twelve columns">
+        <ul id="tracked_tags" class="has-flyout">
+          <li class="tracked_tag">tag1</li>
+          <li class="tracked_tag">tag2</li>
+        </ul>
+      </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <h4>search tags</h4>
+          <input type="text" placeholder="search tags...">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  	<p>Welcome anonymnous user!
+  	You need to <a href="/login/">login</a>
+  	before you can store and share blogs.</p>
+  {% endif %}
+{% endblock %}

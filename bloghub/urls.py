@@ -1,9 +1,12 @@
 from django.conf.urls.defaults import patterns, include, url
-
+from bloghub.blog.views import *
+from django.views.generic.simple import direct_to_template
+import os.path
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
+site_media = os.path.join(os.path.dirname(__file__), 'site_media').replace('\\', '/')
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'bloghub.views.home', name='home'),
@@ -14,4 +17,12 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    (r'^$', main_page),
+    (r'^user/(\w+)/$', user_page),
+    (r'^login/$', 'django.contrib.auth.views.login'),
+    (r'^logout/$', logout_page),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.server', { 'document_root':site_media }),
+    (r'^register/$', register_page),
+    (r'^register/success/$', direct_to_template,
+        { 'template': 'registration/register_success.html' }),
 )

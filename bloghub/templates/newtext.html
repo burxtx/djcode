@@ -11,7 +11,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>{% block title %}{% endblock %} | Bloghub</title>
+  <title>Welcome to Foundation</title>
   
   <!-- Included CSS Files (Uncompressed) -->
   <!--
@@ -35,19 +35,69 @@
   <div class="row">
     <div class="twelve columns">
       <h2>bloghub</h2>
-       <a href="/">home</a> |
-       {% if user.is_authenticated %}
-       welcome {{ user.username }}
-       (<a href="/logout">logout</a>)
-       {% else %}
-        <a href="/login/">login</a> |
-        <a href="/register/">register</a>
-       {% endif %}
+      <p>This is version <strong>0.0.1</strong> generated on August 20, 2012.</p>
       <hr />
     </div>
   </div>
-  {% block content %}{% endblock %}
-   
+
+  <div class="row">
+    <div class="eight columns">
+      <h3>Add a Text Post</h3>
+
+      <!-- Grid Example -->
+      <div class="row">
+        <div class="twelve columns">
+          <div class="panel">
+			<h4>Title</h4>				
+              <div class="title"></div>
+				<input type="text" placeholder="Title">         
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <div class="panel">
+			<h4>Post</h4>				
+			  <div class="Content"></div>
+			    <textarea type="text" placeholder="Write a post..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <div id="Post to">
+            <label>Post to</label>
+            <select style="float:right;">
+              <option value="0">this is test</option>
+            </select>
+          </div>
+        </div>
+        <div class="six columns">
+          <div id="tag_editor">
+            <input type="text" placeholder="Add tags...">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <p><a href="#" class="small button">Create post</a></p>
+        </div>
+        <div class="six columns">
+          <p><a href="#" class="small alert button">Cancel</a></p>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="four columns">
+      <h4>tags</h4>
+        <div id="tag_editor">
+          <input type="text">
+        </div>
+    </div>
+  </div>
+
+  
   <div class="row">
     <div class="twelve columns">
       <h3>Orbit</h3>
