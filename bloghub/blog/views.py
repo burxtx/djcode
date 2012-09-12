@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.template import RequestContext
 from blog.forms import *
+from blog.models import *
 
 def blog(request):
     posts = BlogPost.objects.all()
@@ -41,3 +42,18 @@ def register_page(request):
         'form':form
         })
     return render_to_response('registration/register.html', variables)
+
+def blogpost_save_page(request):
+    if request.methps == 'POST':
+        form = BlogPostSaveForm(request.POST)
+        if form.is_valid():
+            blogpost, created = BlogPost.objects.get_or_create(
+                user=request.user)
+            blogpost.title = form.clean_data['title']
+            if not created:
+    else:
+        form = BlogPostSaveForm()
+    variables = RequestContext(request, {
+        'form:form
+        })
+            
