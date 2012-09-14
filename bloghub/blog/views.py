@@ -43,17 +43,17 @@ def register_page(request):
         })
     return render_to_response('registration/register.html', variables)
 
-def blogpost_save_page(request):
-    if request.methps == 'POST':
-        form = BlogPostSaveForm(request.POST)
-        if form.is_valid():
-            blogpost, created = BlogPost.objects.get_or_create(
-                user=request.user)
-            blogpost.title = form.clean_data['title']
-            if not created:
-    else:
-        form = BlogPostSaveForm()
-    variables = RequestContext(request, {
-        'form:form
-        })
+##def blogpost_save_page(request):
+##    if request.methps == 'POST':
+##        form = BlogPostSaveForm(request.POST)
+##        if form.is_valid():
+##            blogpost, created = BlogPost.objects.get_or_create(
+##                user=request.user)
+##            blogpost.title = form.clean_data['title']
+##            if not created:
+##    else:
+##        form = BlogPostSaveForm()
+##    variables = RequestContext(request, {
+##        'form:form
+##        })
             

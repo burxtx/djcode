@@ -34,12 +34,12 @@ class RegistrationForm(forms.Form):
             return username
         raise forms.ValidationError('Username is already taken.')
 
-class BlogPostSaveForm(forms.Form):
-    title = forms.CharField(
-        label = 'Title',
-        widget = forms.TextInput(attrs={'size': 64})
-    body = forms.Textarea(label = 'Post')
-    tags = forms.CharField(
-        label='Tags',
-        required = False,
-        widget = forms.TextInput(attrs={'size': 64})
+##class BlogPostSaveForm(forms.Form):
+##    title = forms.CharField(
+##        label = 'Title',
+##        widget = forms.TextInput(attrs={'size': 64})
+##    body = forms.Textarea(label = 'Post')
+##    tags = forms.CharField(
+##        label='Tags',
+##        required = False,
+##        widget = forms.TextInput(attrs={'size': 64})
