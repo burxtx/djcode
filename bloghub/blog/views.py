@@ -44,7 +44,7 @@ def register_page(request):
     return render_to_response('registration/register.html', variables)
 
 def blogpost_save_page(request):
-    if request.methps == 'POST':
+    if request.method == 'POST':
         form = BlogPostSaveForm(request.POST)
         if form.is_valid():
             blogpost, created = BlogPost.objects.get_or_create(
@@ -63,7 +63,7 @@ def blogpost_save_page(request):
     else:
         form = BlogPostSaveForm()
     variables = RequestContext(request, {
-        'form:form
+        'form':form
         })
     return render_to_response('blogpost_save.html', variables)
             
