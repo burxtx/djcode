@@ -147,3 +147,6 @@ LOGGING = {
         },
     }
 }
+
+import django.contrib.auth
+django.contrib.auth.LOGIN_URL='/login/'

@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django.template import RequestContext
 from blog.forms import *
 from blog.models import *
+from django.contrib.auth.decorators import login_required
 
 def blog(request):
     posts = BlogPost.objects.all()
@@ -43,6 +44,7 @@ def register_page(request):
         })
     return render_to_response('registration/register.html', variables)
 
+@login_required
 def blogpost_save_page(request):
     if request.method == 'POST':
         form = BlogPostSaveForm(request.POST)
