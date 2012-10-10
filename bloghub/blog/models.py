@@ -4,7 +4,7 @@ from django.db import models
 class BlogPost(models.Model):
     title = models.CharField(max_length=150)
     body = models.TextField()
-    timestamp = models.DateTimeField()
+##    timestamp = models.DateTimeField()
     user = models.ForeignKey(User)
     def __str__(self):
         return '%s, %s' % (self.user.username, self.title)

@@ -1,5 +1,5 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.template import RequestContext
@@ -7,21 +7,21 @@ from blog.forms import *
 from blog.models import *
 from django.contrib.auth.decorators import login_required
 
-def blog(request):
-    posts = BlogPost.objects.all()
-    return render_to_response('archive.html', locals())
+##def blog(request):
+##    posts = BlogPost.objects.all()
+##    return render_to_response('archive.html', locals())
 def main_page(request):
     return render_to_response('main_page.html', RequestContext(request))
 
 def user_page(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        raise Http404('Requested user not found')
-    blogs = user.blogpost_set.all()
-    return render_to_response('user_page.html', {
+    user = get_object_or_404(User, username=username)
+    blogs = user.blogpost_set.order_by('-id')
+    variables = RequestContext(request, {
         'username':username,
-        'bblogs':blogs,})
+        'blogs':blogs,
+        'show_tags': True,
+        })
+    return render_to_response('user_page.html', variables)
 
 def logout_page(request):
     logout(request)
@@ -51,10 +51,10 @@ def blogpost_save_page(request):
         if form.is_valid():
             blogpost, created = BlogPost.objects.get_or_create(
                 user=request.user)
-            blogpost.title = form.clean_data['title']
+            blogpost.title = form.cleaned_data['title']
             if not created:
                 blogpost.tag_set.clear()
-            tag_names = form.clean_data['tags'].split()
+            tag_names = form.cleaned_data['tags'].split()
             for tag_name in tag_names:
                 tag, dummy = Tag.objects.get_or_create(name=tag_name)
                 blogpost.tag_set.add(tag)
