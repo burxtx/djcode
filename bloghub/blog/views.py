@@ -15,10 +15,10 @@ def main_page(request):
 
 def user_page(request, username):
     user = get_object_or_404(User, username=username)
-    blogs = user.blogpost_set.order_by('-id')
+    blogposts = user.blogpost_set.order_by('-id')
     variables = RequestContext(request, {
         'username':username,
-        'blogs':blogs,
+        'blogposts':blogposts,
         'show_tags': True,
         })
     return render_to_response('user_page.html', variables)

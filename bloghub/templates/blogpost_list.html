@@ -2,8 +2,7 @@
  <ul class="blogpost">
   {% for blogpost in blogposts %}
    <li>
-   <a href="{{ blogpost.link.url }}" class="title">
-    {{ blogpost.title }}</a>
+   <a href="{{ blogpost.link.url }}" class="title">{{ blogpost.title }}</a>
    <br />
    {% if show_tags %}
     Tags:
