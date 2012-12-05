@@ -45,3 +45,9 @@ class BlogPostSaveForm(forms.Form):
         label='Tags',
         required = False,
         widget = forms.TextInput(attrs={'size': 64}))
+
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        label=u'Search for',
+        widget=forms.TextInput(attrs={'size':32})
+        )
