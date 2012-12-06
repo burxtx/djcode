@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     (r'^$', main_page),
     (r'^user/(\w+)/$', user_page),
     (r'^tag/([^\s]+)/$', tag_page),
+    (r'^search/$', search_page),
     # Session management
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', logout_page),                    

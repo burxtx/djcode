@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Search Bookmarks{% endblock %}
-{% block head %}Search Bookmarks{% endblock %}
+{% block title %}Search BlogPosts{% endblock %}
+{% block head %}Search BlogPosts{% endblock %}
 {% block content %}
 <form id="search-form" method="get" action=".">
 {{ form.as_p }}
@@ -8,7 +8,7 @@
 </form>
 <div id="search-results">
 {% if show_results %}
-{% include "bookmark_list.html" %}
+{% include "blogpost_list.html" %}
 {% endif %}
 </div>
 {% endblock %}
