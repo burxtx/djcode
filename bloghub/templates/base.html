@@ -32,10 +32,10 @@
 </head>
 <body>
 
-  <div class="row">
-    <div class="twelve columns">
+  <div class="row-fluid">
+    <div class="span12">
       <h2>bloghub</h2>
-       <a href="/">home</a> |
+        <a href="/">home</a> |
        {% if user.is_authenticated %}
         <a href="/save/">submit</a> |
         <a href="/search/">search</a> |
@@ -49,17 +49,6 @@
     </div>
   </div>
   {% block content %}{% endblock %}
-   
-  <div class="row">
-    <div class="twelve columns">
-      <h3>Orbit</h3>
-      <div id="featured">
-        <img src="http://placehold.it/1200x250&text=Slide_1" alt="slide image">
-        <img src="http://placehold.it/1200x250&text=Slide_2" alt="slide image">
-        <img src="http://placehold.it/1200x250&text=Slide_3" alt="slide image">
-      </div>
-    </div>
-  </div>
 
   
   <!-- Included JS Files (Uncompressed) -->

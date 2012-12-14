@@ -3,41 +3,12 @@
 {% block content%}
   {% if user.username %}
 	
-  <div class="row">
-    <div class="eight columns">
-      <h3>bloglist</h3>
-
-      <!-- Grid Example -->
-      <div class="row">
-        <div class="twelve columns">
-          <div class="panel">
-            {% for post in posts %}
-            <h4>{{ post.title }}</h4>				
-            <p>{{ post.timestamp|date:"l, F jS" }}</p>
-            <p>{{ post.body }}</p>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-
+  <div class="row-fluid">
+    <div class="span6">
+      hello
     </div>
-
-    <div class="four columns">
-      <h4>tags</h4>
-      <div class="row">
-      <div class="twelve columns">
-        <ul id="tracked_tags" class="has-flyout">
-          <li class="tracked_tag">tag1</li>
-          <li class="tracked_tag">tag2</li>
-        </ul>
-      </div>
-      </div>
-      <div class="row">
-        <div class="twelve columns">
-          <h4>search tags</h4>
-          <input type="text" placeholder="search tags...">
-        </div>
-      </div>
+    <div class="span6">
+      world
     </div>
   </div>
   {% else %}
