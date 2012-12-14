@@ -1,12 +1,15 @@
 from django.conf.urls.defaults import patterns, include, url
 from bloghub.blog.views import *
 from django.views.generic.simple import direct_to_template
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import os.path
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
-site_media = os.path.join(os.path.dirname(__file__), 'site_media').replace('\\', '/')
+# site_media = os.path.join(os.path.dirname(__file__), 'site_media').replace('\\', '/')
+# site_media = "C:/djcode/bloghub/site_media"
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'bloghub.views.home', name='home'),
@@ -25,17 +28,18 @@ urlpatterns = patterns('',
     # Session management
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', logout_page),                    
-    (r'^site_media/(?P<path>.*)$', 'django.views.static.server',
-        { 'document_root':site_media }),
-    (r'^stylesheets/(?P<path>.*)$', 'django.views.static.server',
-        { 'document_root':site_media + '/stylesheets/' }),
-    (r'^javascripts/(?P<path>.*)$', 'django.views.static.server',
-        { 'document_root':site_media + '/javascripts/' }),
-    (r'^site_media/images/(?P<path>.*)$', 'django.views.static.server',
-        { 'document_root':site_media + '/images/' }),               
+    # (r'^site_media/(?P<path>.*)$', 'django.views.static.server',
+    #     { 'document_root':site_media }),
+    # (r'^site_media/css/(?P<path>.*)$', 'django.views.static.server',
+    #     { 'document_root':site_media + '/css/' }),
+    # (r'^site_media/js/(?P<path>.*)$', 'django.views.static.server',
+    #     { 'document_root':site_media + '/js/' }),
+    # (r'^site_media/img/(?P<path>.*)$', 'django.views.static.server',
+    #     { 'document_root':site_media + '/img/' }),               
     (r'^register/$', register_page),
     (r'^register/success/$', direct_to_template,
         { 'template': 'registration/register_success.html' }),
     # Account management
     (r'^save/$', blogpost_save_page),
 )
+urlpatterns += staticfiles_urlpatterns()
