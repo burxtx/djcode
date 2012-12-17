@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block external %}
+  <script type="text/javascript" src="{{ STATIC_URL }}static/search.js"></script>
+{% endblock %}
 {% block title %}Search BlogPosts{% endblock %}
 {% block head %}Search BlogPosts{% endblock %}
 {% block content %}

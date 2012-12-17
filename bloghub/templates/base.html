@@ -9,7 +9,7 @@
   <meta charset="utf-8" />
 
   <!-- Set the viewport width to device width for mobile -->
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>{% block title %}{% endblock %} | Bloghub</title>
   
@@ -20,6 +20,7 @@
   
   <!-- Included CSS Files (Compressed) -->
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
 
   {% block external %}{% endblock %}
   <!-- IE Fix for HTML5 Tags -->
@@ -46,6 +47,7 @@
       <hr />
     </div>
   </div>
+  <h1>{% block head %}{% endblock %}</h1>
   {% block content %}{% endblock %}
 
   <!-- Included JS Files (Compressed) -->
