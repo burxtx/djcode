@@ -85,6 +85,31 @@ def tag_page(request, tag_name):
         })
     return render_to_response('tag_page.html', variables)
 
+def tag_cloud(request):
+    MAX_WEIGHT = 5
+    tags = Tag.objects.order_by('name')
+    # calculate tag, min and max counts.
+    min_count = max_count = tags[0].blogposts.count()
+    for tag in tags:
+        tag.count = tag.blogposts.count()
+        if tag.count < min_count:
+            min_count = tag_count
+        if max_count < tag.count:
+            max_count = tag.count
+    #calculate count range. Avoid dividing by zero.
+    range = float(max_count - min_count)
+    if range == 0.0:
+        range = 1.0
+    #calculate tag weights.
+    for tag in tags:
+        tag.weight = int(
+            MAX_WEIGHT * (tag.count - min_count) / range
+            )
+    variables = RequestContext(request, {
+        'tags': tags,
+        })
+    return render_to_response('tag_cloud_page.html', variables)
+
 def search_page(request):
     form = SearchForm()
     blogposts = []
@@ -94,7 +119,7 @@ def search_page(request):
         query = request.GET['query'].strip()
         if query:
             form = SearchForm({'query':query})
-            blogopsts = BlogPost.Objects.filter(
+            blogposts = BlogPost.objects.filter(
                 #contain operator, i stands for case-insensitive
                 title__icontains=query)[:10]
     variables = RequestContext(request, {

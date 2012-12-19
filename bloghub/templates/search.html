@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block external %}
-  <script type="text/javascript" src="{{ STATIC_URL }}static/search.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}search.js"></script>
 {% endblock %}
 {% block title %}Search BlogPosts{% endblock %}
 {% block head %}Search BlogPosts{% endblock %}
 {% block content %}
 <form id="search-form" method="get" action=".">
-{{ form.as_p }}
-<input type="submit" value="search" />
+	{{ form.as_p }}
+	<input type="submit" value="search" />
 </form>
 <div id="search-results">
-{% if show_results %}
-{% include "blogpost_list.html" %}
-{% endif %}
+	{% if show_results %}
+		{% include "blogpost_list.html" %}
+	{% endif %}
 </div>
 {% endblock %}
