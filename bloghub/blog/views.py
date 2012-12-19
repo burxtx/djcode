@@ -85,7 +85,7 @@ def tag_page(request, tag_name):
         })
     return render_to_response('tag_page.html', variables)
 
-def tag_cloud(request):
+def tag_cloud_page(request):
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
@@ -93,7 +93,7 @@ def tag_cloud(request):
     for tag in tags:
         tag.count = tag.blogposts.count()
         if tag.count < min_count:
-            min_count = tag_count
+            min_count = tag.count
         if max_count < tag.count:
             max_count = tag.count
     #calculate count range. Avoid dividing by zero.
