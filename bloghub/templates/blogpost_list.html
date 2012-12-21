@@ -14,7 +14,7 @@
      <ul class="tags">
       {% for tag in blogpost.tag_set.all %}
        <li>
-        <a href="/tag/{{ tag.name }}/">{{ tag.name }}</a>
+        <a href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
        </li>
       {% endfor %}
      </ul>
