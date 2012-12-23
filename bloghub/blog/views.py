@@ -18,11 +18,18 @@ def main_page(request):
 def user_page(request, username):
     user = get_object_or_404(User, username=username)
     blogposts = user.blogpost_set.order_by('-id')
+    if request.user.is_authenticated():
+        is_friend = Friendship.objects.filter(
+            from_friend=request.user,
+            to_friend=user)
+    else:
+        is_friend = False
     variables = RequestContext(request, {
         'username':username,
         'blogposts':blogposts,
         'show_tags': True,
         'show_body': True,
+        'is_friend': is_friend,
         })
     return render_to_response('user_page.html', variables)
 
@@ -134,4 +141,31 @@ def search_page(request):
         return render_to_response('bookmark_list.html', variables)
     else:
         return render_to_response('search.html', variables)
-            
+       
+def friends_page(request, username):
+    user = get_object_or_404(User, username=username)
+    friends = [friendship.to_friend for friendship in user.friend_set.all()]
+    friend_blogposts = BlogPost.objects.filter(
+        user__in=friends).order_by('-id')
+    variables = RequestContext(request, {
+        'username': username,
+        'friends': friends,
+        'blogposts': friend_blogposts[:10],
+        'show_tags': True,
+        'show_user': True,
+        'show_body': True,
+        })
+    return render_to_response('friends_page.html', variables)
+@login_required
+def friend_add(request):
+    if 'username' in request.GET:
+        friend = get_object_or_404(
+            User, username=request.GET['username'])
+        friendship = Friendship(
+            from_friend=request.user,
+            to_friend=friend)
+        friendship.save()
+        return HttpResponseRedirect(
+            '/friends/%s/' % request.user.username)
+    else:
+        raise Http404

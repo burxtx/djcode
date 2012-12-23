@@ -14,3 +14,15 @@ class Tag(models.Model):
     blogposts = models.ManyToManyField(BlogPost)
     def __str__(self):
         return self.name
+
+class Friendship(models.Model):
+	from_friend = models.ForeignKey(
+		User, related_name='friend_set'
+		)
+	to_friend = models.ForeignKey(
+		User, related_name='to_friend_set')
+	def __unicode__(self):
+		return u'%s, %s' % (self.from_friend.username,
+			self.to_friend.username)
+	class Meta:
+		unique_together = (('to_friend', 'from_friend'), )
