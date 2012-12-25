@@ -20,8 +20,8 @@ def user_page(request, username):
     blogposts = user.blogpost_set.order_by('-id')
     if request.user.is_authenticated():
         is_friend = Friendship.objects.filter(
-            from_friend=request.user,
-            to_friend=user)
+            following=request.user,
+            followers=user)
     else:
         is_friend = False
     variables = RequestContext(request, {
@@ -144,7 +144,7 @@ def search_page(request):
        
 def friends_page(request, username):
     user = get_object_or_404(User, username=username)
-    friends = [friendship.to_friend for friendship in user.friend_set.all()]
+    friends = [friendship.followers for friendship in user.followers_set.all()]
     friend_blogposts = BlogPost.objects.filter(
         user__in=friends).order_by('-id')
     variables = RequestContext(request, {
@@ -162,8 +162,8 @@ def friend_add(request):
         friend = get_object_or_404(
             User, username=request.GET['username'])
         friendship = Friendship(
-            from_friend=request.user,
-            to_friend=friend)
+            following=request.user,
+            followers=friend)
         friendship.save()
         return HttpResponseRedirect(
             '/friends/%s/' % request.user.username)

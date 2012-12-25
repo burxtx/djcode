@@ -16,13 +16,13 @@ class Tag(models.Model):
         return self.name
 
 class Friendship(models.Model):
-	from_friend = models.ForeignKey(
-		User, related_name='friend_set'
+	following = models.ForeignKey(
+		User, related_name='following_set'
 		)
-	to_friend = models.ForeignKey(
-		User, related_name='to_friend_set')
+	followers = models.ForeignKey(
+		User, related_name='followers_set')
 	def __unicode__(self):
-		return u'%s, %s' % (self.from_friend.username,
-			self.to_friend.username)
+		return u'%s, %s' % (self.following.username,
+			self.followers.username)
 	class Meta:
-		unique_together = (('to_friend', 'from_friend'), )
+		unique_together = (('followers', 'following'), )
