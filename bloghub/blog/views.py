@@ -144,7 +144,7 @@ def search_page(request):
        
 def friends_page(request, username):
     user = get_object_or_404(User, username=username)
-    friends = [friendship.followers for friendship in user.followers_set.all()]
+    friends = [friendship.followers for friendship in user.following_set.all()]
     friend_blogposts = BlogPost.objects.filter(
         user__in=friends).order_by('-id')
     variables = RequestContext(request, {
@@ -166,6 +166,6 @@ def friend_add(request):
             followers=friend)
         friendship.save()
         return HttpResponseRedirect(
-            '/friends/%s/' % request.user.username)
+            '/following/%s/' % request.user.username)
     else:
         raise Http404

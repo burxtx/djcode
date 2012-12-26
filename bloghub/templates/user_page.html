@@ -3,7 +3,7 @@
 {% block head %}Blog post for {{ username }}{% endblock %}
 {% block content %}
 	{% ifequal user.username username %}
-		<a href="/friends/{{ username }}/">you are following...</a>
+		<a href="/following/{{ username }}/">you are following...</a>
 	{% else %}
 		{% if is_friend %}
 			<a href="/friends/{{ user.username }}/">

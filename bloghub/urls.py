@@ -43,7 +43,7 @@ urlpatterns = patterns('',
     # Account management
     (r'^save/$', blogpost_save_page),
     # Friends
-    (r'^friends/(\w+)/$', friends_page),
+    (r'^following/(\w+)/$', friends_page),
     (r'^friend/add/$', friend_add),
 )
 urlpatterns += staticfiles_urlpatterns()
