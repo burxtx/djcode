@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Friends for {{ username }}{% endblock %}
-{% block head %}Friends for {{ username }}{% endblock %}
+{% block title %}{{ username }}'s following{% endblock %}
+{% block head %}{{ username }}'s following{% endblock %}
 {% block content%}
-  <h2>Friend List</h2>
-  {% if friends %}
+  <h2>Following people List</h2>
+  {% if following_people %}
     <ul class="friends">
-      {% for friend in friends %}
-        <li><a href="/user/{{ friend.username }}/">{{ friend.username }}</a></li>
+      {% for people in following_people %}
+        <li><a href="/user/{{ people.username }}/">{{ people.username }}</a></li>
       {% endfor %}
     </ul>
   {% else %}
-  	<p>No friends found.</p>
+  	<p>No following people found.</p>
   {% endif %}
-  <h2>Latest Friend blogposts</h2>
+  <h2>Latest following people blogposts</h2>
   {% include "blogpost_list.html" %}
 {% endblock %}

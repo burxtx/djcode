@@ -15,7 +15,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-class Friendship(models.Model):
+class Followingship(models.Model):
 	following = models.ForeignKey(
 		User, related_name='following_set'
 		)
