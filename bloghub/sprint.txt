@@ -1,1 +1,4 @@
 1. Login以后页面自动跳转到登录前页面
+2. 任何用户都只可以查看自己的Friends page
+3. 登录后主页显示friends latest blog, 左侧显示标签云
+4. 

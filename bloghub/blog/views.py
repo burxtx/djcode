@@ -18,11 +18,18 @@ def main_page(request):
 def user_page(request, username):
     user = get_object_or_404(User, username=username)
     blogposts = user.blogpost_set.order_by('-id')
+    if request.user.is_authenticated():
+        is_following = Followingship.objects.filter(
+            following=request.user,
+            followers=user)
+    else:
+        is_following = False
     variables = RequestContext(request, {
         'username':username,
         'blogposts':blogposts,
         'show_tags': True,
         'show_body': True,
+        'is_following': is_following,
         })
     return render_to_response('user_page.html', variables)
 
@@ -134,4 +141,31 @@ def search_page(request):
         return render_to_response('bookmark_list.html', variables)
     else:
         return render_to_response('search.html', variables)
-            
+       
+def friends_page(request, username):
+    user = get_object_or_404(User, username=username)
+    following_people = [followingship.followers for followingship in user.following_set.all()]
+    following_people_blogposts = BlogPost.objects.filter(
+        user__in=following_people).order_by('-id')
+    variables = RequestContext(request, {
+        'username': username,
+        'following_people': following_people,
+        'blogposts': following_people_blogposts[:10],
+        'show_tags': True,
+        'show_user': True,
+        'show_body': True,
+        })
+    return render_to_response('friends_page.html', variables)
+@login_required
+def friend_add(request):
+    if 'username' in request.GET:
+        friend = get_object_or_404(
+            User, username=request.GET['username'])
+        followingship = Followingship(
+            following=request.user,
+            followers=friend)
+        followingship.save()
+        return HttpResponseRedirect(
+            '/following/%s/' % request.user.username)
+    else:
+        raise Http404

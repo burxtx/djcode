@@ -14,3 +14,15 @@ class Tag(models.Model):
     blogposts = models.ManyToManyField(BlogPost)
     def __str__(self):
         return self.name
+
+class Followingship(models.Model):
+	following = models.ForeignKey(
+		User, related_name='following_set'
+		)
+	followers = models.ForeignKey(
+		User, related_name='followers_set')
+	def __unicode__(self):
+		return u'%s, %s' % (self.following.username,
+			self.followers.username)
+	class Meta:
+		unique_together = (('followers', 'following'), )
