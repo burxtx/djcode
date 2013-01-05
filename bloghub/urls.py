@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     (r'^tag/([^\s]+)/$', tag_page),
     (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
+    (r'^blogpost/(\d+)/$', blogpost_detail_page),
     # Session management
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', logout_page),                    

@@ -33,6 +33,14 @@ def user_page(request, username):
         })
     return render_to_response('user_page.html', variables)
 
+def blogpost_detail_page(request, username):
+    variables = RequestContext(request,{
+        'username':username,
+        'show_tags': True,
+        'show_body': True,
+        })
+    return render_to_response('blogpost_detail', variables)
+
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
