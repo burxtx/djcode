@@ -1,3 +1,4 @@
+#coding: UTF-8
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
@@ -33,13 +34,14 @@ def user_page(request, username):
         })
     return render_to_response('user_page.html', variables)
 
-def blogpost_detail_page(request, username):
+def blogpost_detail_page(request, blogpost_id):
+    blogpost = get_object_or_404(BlogPost, id=blogpost_id)
     variables = RequestContext(request,{
-        'username':username,
+        'blogpost': blogpost,
         'show_tags': True,
         'show_body': True,
         })
-    return render_to_response('blogpost_detail', variables)
+    return render_to_response('blogpost_detail.html', variables)
 
 def logout_page(request):
     logout(request)

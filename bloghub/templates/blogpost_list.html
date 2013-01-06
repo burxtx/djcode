@@ -12,7 +12,7 @@
         <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a>
         <br />
         {% if show_body %}
-          {{ blogpost.body }}
+          {{ blogpost.body|safe }}
         {% endif%}
         <br />
         {% if show_tags %}

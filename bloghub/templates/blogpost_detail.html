@@ -1,6 +1,21 @@
 {% extends "base.html" %}
-{% block title %}{{ username }}{% endblock %}
-{% block head %}Blog post for {{ username }}{% endblock %}
+{% block title %}{{ blogpost.title }}{% endblock %}
+{% block head %}{{ blogpost.title }}{% endblock %}
 {% block content %}
-	
+	{{ blogpost.body|safe }}
+	{% if show_tags %}
+    	<br />
+    	Tags:
+      	{% if blogpost.tag_set.all %}
+        	<ul class="tags">
+          	{% for tag in blogpost.tag_set.all %}
+            	<li>
+              		<a href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
+            	</li>
+          	{% endfor %}
+        	</ul>
+      	{% else %}
+        	None.
+      	{% endif %}
+    {% endif %}
 {% endblock %}
