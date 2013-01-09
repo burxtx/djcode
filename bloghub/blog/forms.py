@@ -36,15 +36,15 @@ class RegistrationForm(forms.Form):
 
 class BlogPostSaveForm(forms.Form):
     title = forms.CharField(
-        label = 'Title',
+        # label = 'Title',
         widget = forms.TextInput(attrs={'size': 64}))
     body = forms.CharField(
-        label='Post', 
-        widget=forms.Textarea)
+        # label='Post', 
+        widget=forms.Textarea())
     tags = forms.CharField(
-        label='Tags',
+        # label='Tags',
         required = False,
-        widget = forms.TextInput(attrs={'size': 64}))
+        widget = forms.TextInput(attrs={'rows': 3}))
 
 class SearchForm(forms.Form):
     query = forms.CharField(

@@ -2,9 +2,31 @@
 {% block title %}Save blog post{% endblock %}
 {% block head %}Save blog post{% endblock %}
 {% block content %}
-<form method="post" action=".">
-    {{ form.as_p }}
-    <input type="submit" value="save" />
+<form class="form-horizontal" method="post" action=".">
+	<div class="control-group">
+		<label class="control-label" for="id_username">Title:</label>
+    		<div class="controls">
+    			{{ form.title }}
+    		</div>
+    </div>
+    <div class="control-group">
+		<label class="control-label" for="id_password">Post:</label>
+			<div class="controls">
+				{{ form.body }}
+    		</div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="id_password">Tag:</label>
+            <div class="controls">
+                {{ form.tags }}
+            </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Save</button>
+        </div>
+    </div>
+    <!-- <input type="submit" value="save" /> -->
 </form>
 <script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
