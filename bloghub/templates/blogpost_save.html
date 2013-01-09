@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Save blog post{% endblock %}
 {% block head %}Save blog post{% endblock %}
+{% block subhead %}Express your interest{% endblock %}
 {% block content %}
 <form class="form-horizontal" method="post" action=".">
 	<div class="control-group">
@@ -23,7 +24,9 @@
     </div>
     <div class="control-group">
         <div class="controls">
-            <button type="submit" class="btn">Save</button>
+            <button type="submit" class="btn btn-primary">Post to primary</button>
+            <button type="submit" class="btn btn-warning">Post to medium</button>
+            <button type="submit" class="btn btn-success">Post to advanced</button>
         </div>
     </div>
     <!-- <input type="submit" value="save" /> -->
@@ -32,7 +35,8 @@
 <script type="text/javascript">
 tinyMCE.init({
 mode: "textareas",
-theme: "simple"
+theme: "advanced",
+theme_advanced_resizing : true
 });
 </script>
 {% endblock %}

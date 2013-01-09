@@ -13,8 +13,9 @@ pdb.set_trace()
 ##def blog(request):
 ##    posts = BlogPost.objects.all()
 ##    return render_to_response('archive.html', locals())
-def main_page(request):
-    return render_to_response('main_page.html', RequestContext(request))
+
+# def main_page(request):
+#     return render_to_response('main_page.html', RequestContext(request))
 
 def user_page(request, username):
     user = get_object_or_404(User, username=username)
@@ -102,7 +103,8 @@ def tag_page(request, tag_name):
         })
     return render_to_response('tag_page.html', variables)
 
-def tag_cloud_page(request):
+# def tag_cloud_page(request):
+def main_page(request):
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
@@ -125,7 +127,8 @@ def tag_cloud_page(request):
     variables = RequestContext(request, {
         'tags': tags,
         })
-    return render_to_response('tag_cloud_page.html', variables)
+    # return render_to_response('tag_cloud_page.html', variables)
+    return render_to_response('main_page.html', variables)
 
 def search_page(request):
     form = SearchForm()

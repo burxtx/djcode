@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     (r'^$', main_page),
     (r'^user/(\w+)/$', user_page),
     (r'^tag/([^\s]+)/$', tag_page),
-    (r'^tag/$', tag_cloud_page),
+    # (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
     (r'^blogpost/(\d+)/$', blogpost_detail_page),
     # Session management
