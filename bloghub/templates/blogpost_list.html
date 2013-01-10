@@ -12,7 +12,7 @@
         <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a>
         <br />
         {% if show_body %}
-          {{ blogpost.body|safe }}
+          {{ blogpost.body|safe|truncatewords_html:20 }}<a href="/blogpost/{{ blogpost.id }}">Read more...</a>
         {% endif%}
         <br />
         {% if show_tags %}
