@@ -46,5 +46,7 @@ urlpatterns = patterns('',
     # Friends
     (r'^following/(\w+)/$', friends_page),
     (r'^friend/add/$', friend_add),
+    # django comments
+    (r'^comments/', include('django.contrib.comments.urls')),
 )
 urlpatterns += staticfiles_urlpatterns()

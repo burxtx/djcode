@@ -1,0 +1,12 @@
+{% load comments %}
+<h2>Comments</h2>
+{% get_comment_count for blogpost blogpost.id as comment_count %}
+{% get_comment_list for blogpost blogpost.id as comment_list %}
+{% for comment in comment_list %}
+	<div class="comment">
+		<p><b>{{ comment.user.username }}</b> said:</p>
+		{{ comment.comment|escape|urlizetrunc:40|linebrakes }}
+	</div>
+{% endfor %}
+<p>Number of comments: {{ comment_count }}</p>
+{% render_comment_form for blogpost blogpost.id%}
