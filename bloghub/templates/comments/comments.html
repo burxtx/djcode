@@ -5,7 +5,7 @@
 {% for comment in comment_list %}
 	<div class="comment">
 		<p><b>{{ comment.user.username }}</b> said:</p>
-		{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+		{{ comment.comment|escape|urlizetrunc:40|linebrakes }}
 	</div>
 {% endfor %}
 <p>Number of comments: {{ comment_count }}</p>
