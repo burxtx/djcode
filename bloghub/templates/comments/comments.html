@@ -2,11 +2,54 @@
 <h2>Comments</h2>
 {% get_comment_count for blogpost as comment_count %}
 {% get_comment_list for blogpost as comment_list %}
+<h3>Number of comments: {{ comment_count }}</h3>
 {% for comment in comment_list %}
 	<div class="comment">
-		<p><b>{{ comment.user.username }}</b> said:</p>
-		{{ comment.comment|escape|urlizetrunc:40|linebrakes }}
+		{% if comment.user %}
+			<p><b>{{ comment.user.username }}</b> said:</p>
+		{% else %}
+			<p><b>{{ comment.user_name }}</b> said:</p>
+		{% endif %}
+		<small>{{ comment.submit_date|date:"F,j,Y" }}</small>
+		{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
 	</div>
+	<hr />
 {% endfor %}
-<p>Number of comments: {{ comment_count }}</p>
-{% render_comment_form for blogpost %}
+
+<!-- {% if user.is_authenticated %}
+	{% get_comment_form for blogpost as form %}
+	{% for field in form %}
+		{% if field.name == "comment" and field.name == "honeypot" %}
+			{{ field }}
+		{% endif %}
+	{% endfor %}
+{% else %}
+	{% get_comment_form for blogpost as form %}
+	<form action="{% comment_form_target %}" method="POST">
+		{% csrf_token %}
+		{{ form.obejct_pk }}
+		{{ form.content_type }}
+		{{ form.submit_date }}
+		{{ form.security_hash }}
+		<div class="control-group">
+			<label class="control-label" for="id_username">Name:</label>
+	    		<div class="controls">
+	    			{{ form.name }}
+	    		</div>
+	    </div>
+	    <div class="control-group">
+			<label class="control-label" for="id_email">Email:</label>
+	    		<div class="controls">
+	    			{{ form.email }}
+	    		</div>
+	    </div>
+	    <div class="control-group">
+			<label class="control-label" for="id_comment">Comment:</label>
+	    		<div class="controls">
+	    			{{ form.comment }}
+	    		</div>
+	    </div>
+	    <input id='comment_submit' name="post" value="Post" type="submit" />
+	    <input type="hidden" name="next" value="{% url blogpost_detail blogpost.id %}" />
+	</form>
+{% endif %} -->

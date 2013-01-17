@@ -1,30 +1,47 @@
 {% load comments %}
+
 {% get_comment_form for blogpost as form %}
-<form action="{% comment_form_target %}" method="POST">
-	{% csrf_token %}
-	{{ form.obejct_pk }}
-	{{ form.content_type }}
-	{{ form.timestamp }}
-	{{ form.site }}
-	{{ form.submit_date }}
-	{{ form.security_hash }}
-	<div class="control-group">
-		<label class="control-label" for="id_username">Name:</label>
-    		<div class="controls">
-    			{{ form.user_name }}
-    		</div>
-    </div>
-    <div class="control-group">
-		<label class="control-label" for="id_email">Email:</label>
-    		<div class="controls">
-    			{{ form.user_email }}
-    		</div>
-    </div>
-    <div class="control-group">
-		<label class="control-label" for="id_comment">Comment:</label>
-    		<div class="controls">
-    			{{ form.comment }}
-    		</div>
-    </div>
-	<input type="hidden" name="next" value="{% url my_comment_was_posted %}" />
-</form>
+{% if user.is_authenticated %}
+    <form action="{% comment_form_target %}" method="POST">
+        {% for field in form %}
+            {% if field.is_hidden %}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+        <input type="hidden" name="name" value="{{ user.username }}" />
+        <input type="text" name="honeypot" size="64" style="display: none;" />
+        <label for="id_comment">Comment</label>
+        <textarea id="id_comment" rows="10" cols="40" name="comment"></textarea>
+        <input type="submit" name="submit" class="submit-post" value="Post" />
+    </form>
+{% else %}
+<!-- name, email and comment are visible -->
+    <form action="{% comment_form_target %}" method="POST">
+        {% csrf_token %}
+        {{ form.obejct_pk }}
+        {{ form.content_type }}
+        {{ form.submit_date }}
+        {{ form.security_hash }}
+        <div class="control-group">
+            <label class="control-label" for="id_username">Name:</label>
+                <div class="controls">
+                    {{ form.name }}
+                </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="id_email">Email:</label>
+                <div class="controls">
+                    {{ form.email }}
+                </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="id_comment">Comment:</label>
+                <div class="controls">
+                    {{ form.comment }}
+                </div>
+        </div>
+        <input type="text" name="honeypot" size="64" style="display: none;" />
+        <input id='comment_submit' name="post" value="Post" type="submit" />
+        <input type="hidden" name="next" value="{% url blogpost_detail blogpost.id %}" />
+    </form>
+{% endif %}
