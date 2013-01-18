@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     url(r'^blogpost/(\d+)/$', blogpost_detail_page, name="blogpost_detail"),
     # Session management
     (r'^login/$', 'django.contrib.auth.views.login'),
-    (r'^logout/$', logout_page),                    
+    (r'^logout/$', logout_page),
     # (r'^site_media/(?P<path>.*)$', 'django.views.static.server',
     #     { 'document_root':site_media }),
     # (r'^site_media/css/(?P<path>.*)$', 'django.views.static.server',
@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     (r'^register/success/$', direct_to_template,
         { 'template': 'registration/register_success.html' }),
     # Account management
-    (r'^save/$', blogpost_save_page),
+    url(r'^save/$', blogpost_save_page, name="blogpost_save"),
     # Friends
     (r'^following/(\w+)/$', friends_page),
     (r'^friend/add/$', friend_add),

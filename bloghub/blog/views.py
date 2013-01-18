@@ -46,7 +46,7 @@ def blogpost_detail_page(request, blogpost_id):
 
 def logout_page(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def register_page(request):
     if request.method == 'POST':
