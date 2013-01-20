@@ -67,7 +67,7 @@
               </li>
             {% else %}
               <li class="">
-                <a href="/login/">login</a>
+                <a href="{% url django.contrib.auth.views.login %}?next={{ request.path }}">login</a>
               </li>
               <li class="">
                 <a href="/register/">register</a>
