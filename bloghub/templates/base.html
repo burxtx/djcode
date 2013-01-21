@@ -58,7 +58,7 @@
                 <a href="/user/{{ user.username }}/">{{ user.username }}</a>
               </li>
               <li class="">
-                <a href="/logout">logout</a>
+                <a href="{% url logout_page %}">logout</a>
               </li>
               <li class="">
                 <form class="navbar-search pull-right">
@@ -67,7 +67,7 @@
               </li>
             {% else %}
               <li class="">
-                <a href="{% url django.contrib.auth.views.login %}?next={{ request.path }}">login</a>
+                <a href="{% url login_page %}?next={{ request.path }}">login</a>
               </li>
               <li class="">
                 <a href="/register/">register</a>

@@ -112,9 +112,16 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/')
 )
 
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     "django.core.context_processors.request",
-#     )
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+    "django.core.context_processors.auth",
+    # "django.core.context_processors.debug",
+    # "django.core.context_processors.i18n",
+    # "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    # "django.core.context_processors.request",
+    # "django.core.context_processors.request",
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -154,5 +161,5 @@ LOGGING = {
     }
 }
 
-import django.contrib.auth
-django.contrib.auth.LOGIN_URL='/login/'
+# import django.contrib.auth
+# django.contrib.auth.LOGIN_URL='/login/'
