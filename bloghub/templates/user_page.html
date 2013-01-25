@@ -3,7 +3,8 @@
 {% block head %}Blog post for {{ username }}{% endblock %}
 {% block content %}
 	{% ifequal user.username username %}
-		<a href="/following/{{ username }}/">you are following...</a>
+		<a href="/following/{{ username }}/">people you are following...</a>
+		<a href="/tag-following/{{ username }}/">tags you are following...</a>
 	{% else %}
 		{% if is_following %}
 			<a href="/following/{{ user.username }}/">
@@ -12,8 +13,7 @@
 			<a href="/friend/add/?username={{ username }}">
 				follow {{ username }}</a>
 		{% endif %}
-			<a href="/following/{{ username }}/">
-				view {{ username }}'s following</a>
+		<a href="/following/{{ username }}/">view {{ username }}'s following</a>
 	{% endifequal %}
 	{% include "blogpost_list.html" %}
 {% endblock %}
