@@ -38,7 +38,7 @@ urlpatterns = patterns('',
     #     { 'document_root':site_media + '/js/' }),
     # (r'^site_media/img/(?P<path>.*)$', 'django.views.static.server',
     #     { 'document_root':site_media + '/img/' }),               
-    (r'^register/$', register_page),
+    url(r'^register/$', register_page, name="register_page"),
     (r'^register/success/$', direct_to_template,
         { 'template': 'registration/register_success.html' }),
     # Account management

@@ -67,7 +67,15 @@
               </li>
             {% else %}
               <li class="">
-                <a href="{% url login_page %}?next={{ request.path }}">login</a>
+                {% if request.path != "/register/" %}
+                  {% if request.path != "/register/success/" %}
+                    <a href="{% url login_page %}?next={{ request.path }}">login</a>
+                  {% else %}
+                    <a href="{% url login_page %}?next=/">login</a>
+                  {% endif %}
+                {% else %}
+                  <a href="{% url login_page %}?next=/">login</a>
+                {% endif %}
               </li>
               <li class="">
                 <a href="/register/">register</a>

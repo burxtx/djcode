@@ -9,7 +9,8 @@
   <ul class="blogpost">
     {% for blogpost in blogposts %}
       <li>
-        <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a>
+        <h3>
+        <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a></h3>
         <br />
         {% if show_body %}
           {{ blogpost.body|safe|truncatewords_html:20 }}<a href="/blogpost/{{ blogpost.id }}">Read more...</a>

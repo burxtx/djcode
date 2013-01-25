@@ -27,7 +27,7 @@
   </div>
   {% else %}
   	<p>Welcome anonymnous user!
-  	You need to <a href="/login/">login</a>
+  	You need to <a href="{% url login_page%}?next=/">login</a>
   	before you can store and share blogs.</p>
   {% endif %}
 {% endblock %}
