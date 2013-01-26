@@ -67,8 +67,8 @@
               </li>
             {% else %}
               <li class="">
-                {% if request.path not in "/register/success/" 
-                  and request.path not in "/accounts/login/" %}
+                <!-- template syntax doesn't support \n\r\ -->
+                {% if request.path not in "/register/success/" and request.path not in "/accounts/login/" %}
                   <a href="{% url login_page %}?next={{ request.path }}">login</a>
                 {% else %}
                   <a href="{% url login_page %}?next=/">login</a>
