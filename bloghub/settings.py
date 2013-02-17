@@ -135,7 +135,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'bloghub.blog'
+    'bloghub.blog',
+    'bloghub.rating'
 )
 
 # A sample logging configuration. The only tangible logging

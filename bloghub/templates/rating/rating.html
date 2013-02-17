@@ -1,19 +1,28 @@
-
 <h2>Review</h2>
-<div class="radio">
-	<label class="radio">
-		<input type="radio" name="optionsRadios" id="optionsRadios1" value="" />Bullshit
-	</label>
-	<label class="radio">
-		<input type="radio" name="optionsRadios" id="optionsRadios2" value="" />Copied
-	</label>
-	<label class="radio">
-		<input type="radio" name="optionsRadios" id="optionsRadios3" value="" />Just so so
-	</label>
-	<label class="radio">
-		<input type="radio" name="optionsRadios" id="optionsRadios4" value="" />Help me a lot
-	</label>
-	<label class="radio">
-		<input type="radio" name="optionsRadios" id="optionsRadios5" value="" />Awesome! Recommend!
-	</label>
-</div>
+{% if user.is_authenticated %}
+<!-- 	{% if user == ctype.user.username %}
+		<p>debug: you are not allowed to rating your own blog</p>
+	{% else %} -->
+		<div class="radio">
+			{{ form.as_ul }}
+<!-- 			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios1" value="" />Bullshit
+			</label> -->
+<!-- 			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios1" value="" />Bullshit
+			</label>
+			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios2" value="" />Copied
+			</label>
+			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios3" value="" />Just so so
+			</label>
+			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios4" value="" />Help me a lot
+			</label>
+			<label class="radio">
+				<input type="radio" name="optionsRadios" id="optionsRadios5" value="" />Awesome! Recommend!
+			</label> -->
+		</div>
+	<!-- {% endif %} -->
+{% endif %}
