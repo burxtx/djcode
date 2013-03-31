@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ username }}{% endblock %}
 {% block head %}Blog post for {{ username }}{% endblock %}
+{% block external %}<script src="{{ STATIC_URL }}js/follow.js"></script>{% endblock %}
 {% block content %}
 	{% ifequal user.username username %}
 		<a href="/following/{{ username }}/">people you are following...</a>
@@ -13,6 +14,7 @@
 					you already followed {{ username }}</a>
 			</span>
 		{% else %}
+			<button id="follow" type="button" class="btn btn-primary" data-toggle="button" data-follow-text="unfollow">follow</button>
 			<a href="/friend/add/?username={{ username }}">
 				follow {{ username }}</a>
 		{% endif %}

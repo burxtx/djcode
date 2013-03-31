@@ -22,7 +22,11 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
-
+  <!-- Included JS Files (Compressed) -->
+  <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+  <!-- Initialize JS Plugins -->
+  <script src="{{ STATIC_URL }}js/jquery.js"></script>
+  <script src="http://files.cnblogs.com/rubylouvre/bootstrap-button.js"></script>
   {% block external %}{% endblock %}
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
@@ -111,11 +115,6 @@
       
       {% block content %}{% endblock %}
 
-      <!-- Included JS Files (Compressed) -->
-      <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
-      
-      <!-- Initialize JS Plugins -->
-      <script src="{{ STATIC_URL }}jquery.js"></script>
     </div>
   </div>
 </body>
