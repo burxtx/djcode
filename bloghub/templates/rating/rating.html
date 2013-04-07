@@ -1,10 +1,8 @@
 <h2>Review</h2>
 {% if user.is_authenticated %}
-<!-- 	{% if user == ctype.user.username %}
-		<p>debug: you are not allowed to rating your own blog</p>
-	{% else %} -->
 		<div class="radio">
-			{{ form.as_ul }}
+			{{ rating_form }}
+
 <!-- 			<label class="radio">
 				<input type="radio" name="optionsRadios" id="optionsRadios1" value="" />Bullshit
 			</label> -->
@@ -24,5 +22,4 @@
 				<input type="radio" name="optionsRadios" id="optionsRadios5" value="" />Awesome! Recommend!
 			</label> -->
 		</div>
-	<!-- {% endif %} -->
 {% endif %}

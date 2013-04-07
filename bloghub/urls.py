@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from bloghub.blog.views import *
+from bloghub.rating.views import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import os.path
@@ -27,6 +28,7 @@ urlpatterns = patterns('',
     # (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
     url(r'^blogpost/(\d+)/$', blogpost_detail_page, name="blogpost_detail"),
+    (r'^blogpost/(\d+)/$', add_rate),
     # Session management
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', name="login_page"),
     url(r'^accounts/logout/$', logout_page, name="logout_page"),

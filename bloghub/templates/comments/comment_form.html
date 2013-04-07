@@ -1,8 +1,8 @@
 {% load comments %}
-{% include "rating/rating.html" %}
 {% if user.is_authenticated %}
     {% get_comment_form for blogpost as form %}
         <form action="{% comment_form_target %}" method="POST">
+            {% include "rating/rating.html" %}
             {% csrf_token %}
             {{ form.object_pk }}
             {{ form.content_type }}
