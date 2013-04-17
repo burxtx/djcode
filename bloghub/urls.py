@@ -48,5 +48,6 @@ urlpatterns = patterns('',
     (r'^friend/add/$', friend_add),
     # django comments
     (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^ratings/', include('ratings.urls')),
 )
 urlpatterns += staticfiles_urlpatterns()

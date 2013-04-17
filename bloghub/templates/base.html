@@ -23,9 +23,10 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
   <!-- Included JS Files (Compressed) -->
+  <script src="{{ STATIC_URL }}jquery.js"></script>
   <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
   <!-- Initialize JS Plugins -->
-  <script src="{{ STATIC_URL }}js/jquery.js"></script>
+  <script src="{{ STATIC_URL }}js/nav.js"></script>
   <script src="http://files.cnblogs.com/rubylouvre/bootstrap-button.js"></script>
   {% block external %}{% endblock %}
   <!-- IE Fix for HTML5 Tags -->
@@ -87,6 +88,7 @@
       </div>
     </div>
   </div>
+  <hr />
   <header id="overview" class="page-header">
     <div class="container">
       <h1>{% block head %}{% endblock %}</h1>
@@ -96,25 +98,9 @@
 
   <div class="container">
     <div class="row">
-<!-- the former page header style here-->
-<!--       <div class="span12">
-        <h1>bloghub</h1>
-          <a href="/">home</a> |
-         {% if user.is_authenticated %}
-          <a href="/save/">submit</a> |
-          <a href="/search/">search</a> |
-          <a href="/user/{{ user.username }}/">{{ user.username }}</a> |
-          <a href="/logout">logout</a>
-         {% else %}
-          <a href="/login/">login</a> |
-          <a href="/register/">register</a>
-         {% endif %}
-        <hr />
+      <div class="span12">
+        {% block content %}{% endblock %}
       </div>
-    </div> -->
-      
-      {% block content %}{% endblock %}
-
     </div>
   </div>
 </body>

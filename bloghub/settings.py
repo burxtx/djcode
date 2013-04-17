@@ -136,7 +136,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'bloghub.blog',
-    'bloghub.rating'
+    # 'bloghub.rating',
+    'ratings',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -164,3 +165,7 @@ LOGGING = {
 
 # import django.contrib.auth
 # django.contrib.auth.LOGIN_URL='/login/'
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+     'django.core.context_processors.request',
+)

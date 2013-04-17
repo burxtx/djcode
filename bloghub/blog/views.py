@@ -8,6 +8,9 @@ from blog.models import *
 from django.contrib.auth.decorators import login_required
 import pdb
 
+from ratings.handlers import ratings
+from ratings.forms import StarVoteForm, SliderVoteForm
+ratings.register(BlogPost, form_class=StarVoteForm)
 pdb.set_trace()
 ##def blog(request):
 ##    posts = BlogPost.objects.all()
