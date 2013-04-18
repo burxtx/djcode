@@ -1,4 +1,5 @@
 {% load comments %}
+{% load gravatar %}
 <h2>Comments</h2>
 {% get_comment_count for blogpost as comment_count %}
 {% get_comment_list for blogpost as comment_list %}
@@ -6,6 +7,9 @@
 {% for comment in comment_list %}
 	<div class="comment">
 		{% if comment.user %}
+			<div class="user-face">
+				<img src="{% gravatar_url comment.user_email %}" alt="" width='40px' height='40px' />
+			</div>
 			<p><b>{{ comment.user.username }}</b> said:</p>
 		{% else %}
 			<p><b>{{ comment.user_name }}</b> said:</p>
