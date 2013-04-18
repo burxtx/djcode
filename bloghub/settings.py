@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'bloghub.blog',
-    # 'bloghub.rating',
+    'bloghub.rating',
     'ratings',
 )
 
