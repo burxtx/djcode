@@ -18,6 +18,13 @@
         	None.
       	{% endif %}
   {% endif %}
+  {% if user.id == blogpost.user_id%}
+    {% include "ratings.html" %}
+    <p>You cannot rate your own blog</p>
+  {% else %}
+    {% include "ratings.html" %}
+    {% include "ratings_form.html" %}
+  {% endif %}
   {% include "comments/comments.html" %}
   {% include "comments/comment_form.html" %}
 {% endblock %}

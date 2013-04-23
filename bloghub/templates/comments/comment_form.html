@@ -1,5 +1,5 @@
 {% load comments %}
-{% include "ratings.html" %}
+
 {% if user.is_authenticated %}
     {% get_comment_form for blogpost as form %}
         <form action="{% comment_form_target %}" method="POST">
