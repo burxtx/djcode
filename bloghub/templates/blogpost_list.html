@@ -11,6 +11,10 @@
       <li>
         <h3>
         <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a></h3>
+        {% if show_edit %}
+        <!-- <a href="/save/?id={{ blogpost.id|urlencode }}" class="edit">[edit]</a> -->
+        <a href="{% url blogpost_save blogpost.id %}" class="edit">[edit]</a>
+        {% endif %}
         <br />
         {% if show_body %}
           {{ blogpost.body|safe|truncatewords_html:20 }}<a href="/blogpost/{{ blogpost.id }}">Read more...</a>

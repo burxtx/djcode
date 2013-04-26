@@ -33,6 +33,7 @@ def user_page(request, username):
         'blogposts':blogposts,
         'show_tags': True,
         'show_body': True,
+        'show_edit': username==request.user.username,
         'is_following': is_following,
         })
     return render_to_response('user_page.html', variables)
@@ -67,25 +68,49 @@ def register_page(request):
         })
     return render_to_response('registration/register.html', variables)
 
+def _blogpost_save(request, form, id):
+    if id:
+        blogpost, created = BlogPost.objects.get_or_create(user=request.user, pk=id)
+    else:
+        blogpost = BlogPost.objects.create(user=request.user)
+    blogpost.body = form.cleaned_data['body']
+    blogpost.title = form.cleaned_data['title']
+#           if not created:
+#                blogpost.tag_set.clear()
+    tag_names = form.cleaned_data['tags'].split()
+    for tag_name in tag_names:
+        tag, dummy = Tag.objects.get_or_create(name=tag_name)
+        blogpost.tag_set.add(tag)
+    blogpost.save()
+    return blogpost
+
 @login_required
-def blogpost_save_page(request):
+def blogpost_save_page(request, id):
     if request.method == 'POST':
         form = BlogPostSaveForm(request.POST)
         if form.is_valid():
-            blogpost = BlogPost.objects.create(
-                user=request.user)
-            blogpost.body = form.cleaned_data['body']
-            blogpost.title = form.cleaned_data['title']
- #           if not created:
-#                blogpost.tag_set.clear()
-            tag_names = form.cleaned_data['tags'].split()
-            for tag_name in tag_names:
-                tag, dummy = Tag.objects.get_or_create(name=tag_name)
-                blogpost.tag_set.add(tag)
-            blogpost.save()
+            blogpost = _blogpost_save(request, form, id)
             return HttpResponseRedirect(
                 '/user/%s/' % request.user.username
             )
+    elif request.method == 'GET':
+        try:
+            blogpost = BlogPost.objects.get(
+                pk=id,
+                user=request.user
+                )
+            body = blogpost.body
+            title = blogpost.title
+            tags = ' '.join(
+                tag.name for tag in blogpost.tag_set.all()
+                )
+        except BlogPost.DoesNotExist:
+            pass
+        form = BlogPostSaveForm({
+            'body': body,
+            'title': title,
+            'tags': tags
+            })
     else:
         form = BlogPostSaveForm()
     variables = RequestContext(request, {

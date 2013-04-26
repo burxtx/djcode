@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     (r'^register/success/$', direct_to_template,
         { 'template': 'registration/register_success.html' }),
     # Account management
-    url(r'^save/$', blogpost_save_page, name="blogpost_save"),
+    url(r'^save/(?P<id>\d*)/$', blogpost_save_page, name="blogpost_save"),
     # Friends
     (r'^following/(\w+)/$', friends_page),
     (r'^friend/add/$', friend_add),
