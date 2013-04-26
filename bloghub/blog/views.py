@@ -68,7 +68,7 @@ def register_page(request):
         })
     return render_to_response('registration/register.html', variables)
 
-def _blogpost_save(request, form, id):
+def _blogpost_save(request, form, id=None):
     if id:
         blogpost, created = BlogPost.objects.get_or_create(user=request.user, pk=id)
     else:
@@ -85,7 +85,7 @@ def _blogpost_save(request, form, id):
     return blogpost
 
 @login_required
-def blogpost_save_page(request, id):
+def blogpost_save_page(request, id=None):
     if request.method == 'POST':
         form = BlogPostSaveForm(request.POST)
         if form.is_valid():
@@ -93,7 +93,7 @@ def blogpost_save_page(request, id):
             return HttpResponseRedirect(
                 '/user/%s/' % request.user.username
             )
-    elif request.method == 'GET':
+    elif request.method == 'GET' and id:
         try:
             blogpost = BlogPost.objects.get(
                 pk=id,
