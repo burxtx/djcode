@@ -43,7 +43,9 @@ urlpatterns = patterns('',
         { 'template': 'registration/register_success.html' }),
     # Account management
     url(r'^save/$', blogpost_save_page, name="blogpost_save"),
-    url(r'^save/(\d+)/$', blogpost_save_page, name="blogpost_update"),
+    url(r'^blogpost/edit/(\d+)/$', blogpost_save_page, name="blogpost_update"),
+    # if there is no parameters from security respect? 
+    # url(r'^blogpost/edit/$', blogpost_save_page, name="blogpost_update"),
     # Friends
     (r'^following/(\w+)/$', friends_page),
     (r'^friend/add/$', friend_add),

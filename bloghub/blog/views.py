@@ -105,7 +105,9 @@ def blogpost_save_page(request, id=None):
                 tag.name for tag in blogpost.tag_set.all()
                 )
         except BlogPost.DoesNotExist:
-            pass
+            # restrict user to edit their own blogpost, 
+            # so if others trying to access others' blog, force redirect to their own page.
+            return HttpResponseRedirect('/user/%s/' % request.user.username)
         form = BlogPostSaveForm({
             'body': body,
             'title': title,
