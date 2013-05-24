@@ -4,19 +4,16 @@
 {% block content %}
 	{{ blogpost.body|safe }}
 	{% if show_tags %}
-    	<br />
-    	Tags:
-      	{% if blogpost.tag_set.all %}
-        	<ul class="tags">
-          	{% for tag in blogpost.tag_set.all %}
-            	<li>
-              		<a href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
-            	</li>
-          	{% endfor %}
-        	</ul>
-      	{% else %}
-        	None.
-      	{% endif %}
+    {% if blogpost.tag_set.all %}
+      <div class="post-tags">
+        {% for tag in blogpost.tag_set.all %}
+          <div class="post-tag">
+            <a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">#{{ tag.name }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+    {% endif %}
   {% endif %}
   {% if user.id == blogpost.user_id%}
     {% include "ratings.html" %}

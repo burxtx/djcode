@@ -211,3 +211,10 @@ def friend_add(request):
             '/following/%s/' % request.user.username)
     else:
         raise Http404
+
+
+def ajax_tag_autocomplete(request):
+    if 'q' in request.GET:
+        tags = Tag.objects.filter(name__isstartswith=request.GET['q'])[:10]
+        return HttpResponse(u'\n'.join(tag.name for tag in tags))
+    return HttpResponse()

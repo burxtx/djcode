@@ -52,5 +52,6 @@ urlpatterns = patterns('',
     # django comments
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^ratings/', include('ratings.urls')),
+    (r'^ajax/tag/autocomplete/$', ajax_tag_autocomplete),
 )
 urlpatterns += staticfiles_urlpatterns()

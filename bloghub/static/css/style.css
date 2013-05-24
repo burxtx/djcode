@@ -10,3 +10,28 @@
 .tag-cloud-3{font-size: 160%;}
 .tag-cloud-4{font-size: 180%;}
 .tag-cloud-5{font-size: 200%;}
+
+.post-item{
+	display:block;
+	/*padding-bottom:30px;*/
+}
+
+.post-tag{
+	display:inline-block;
+	color: #B3B3B1;
+	margin-right: 7px;
+}
+
+.post-edit, .metadata{
+	float: right;
+	position: relative;
+	/*margin-left: 20px;*/
+	display:inline-block;
+	/*color: #B3B3B1;*/
+	color: #A8B1BA;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    min-height: 22px;
+    text-align: right;
+}

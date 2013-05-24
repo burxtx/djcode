@@ -1,48 +1,46 @@
 {% if blogposts %}
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#">What</a>
-    </li>
-    <li><a href="#">How</a></li>
-    <li><a href="#">Why</a></li>
-  </ul>
-  <ul class="blogpost">
+  <div class="post-bucket">
     {% for blogpost in blogposts %}
-      <li>
-        <h3>
+      <div class="post-item">
+        <h3 class="post-item-title">
         <a href="/blogpost/{{ blogpost.id }}" class="title">{{ blogpost.title }}</a></h3>
-        {% if show_edit %}
-          <!-- <a href="/save/?id={{ blogpost.id|urlencode }}" class="edit">[edit]</a> -->
-          <a href="{% url blogpost_update blogpost.id %}" class="edit">[edit]</a>
-        {% endif %}
-        <br />
+        <div class="row">
+          <div class="span6">
+            {% if show_user %}
+              Posted by:
+              <a href="/user/{{ blogpost.user.username }}/" class="username">
+              {{ blogpost.user.username }}</a>
+            {% endif %}
+          </div>
+          <div class="span6">
+            {% if show_edit %}
+            <!-- <a href="/save/?id={{ blogpost.id|urlencode }}" class="edit">[edit]</a> -->
+            <div class="post-controls">
+              <a href="{% url blogpost_update blogpost.id %}" class="post-edit">[edit]</a>
+            </div>
+          {% endif %}
+          </div>
+        </div>
         {% if show_body %}
           {{ blogpost.body|safe|truncatewords_html:20 }}<a href="/blogpost/{{ blogpost.id }}">Read more...</a>
         {% endif%}
         <br />
         {% if show_tags %}
-          Tags:
           {% if blogpost.tag_set.all %}
-            <ul class="tags">
+            <div class="post-tags">
               {% for tag in blogpost.tag_set.all %}
-                <li>
-                  <a href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
-                </li>
+                <div class="post-tag">
+                  <a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">#{{ tag.name }}</a>
+                </div>
               {% endfor %}
-            </ul>
+            </div>
           {% else %}
-            None.
           {% endif %}
-        <br />
         {% endif %}
-        {% if show_user %}
-          Posted by:
-            <a href="/user/{{ blogpost.user.username }}/" class="username">
-              {{ blogpost.user.username }}</a>
-        {% endif %}
-      </li>
+      </div>
+      <hr />
     {% endfor %}
-  </ul>
+  </div>
 {% else %}
   <p>No blog posts found.</p>
 {% endif %}
