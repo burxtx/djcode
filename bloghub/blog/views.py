@@ -91,7 +91,8 @@ def blogpost_save_page(request, id=None):
         if form.is_valid():
             blogpost = _blogpost_save(request, form, id)
             return HttpResponseRedirect(
-                '/user/%s/' % request.user.username
+                # '/user/%s/' % request.user.username
+                '/blogpost/%s/' % id
             )
     elif request.method == 'GET' and id:
         try:
