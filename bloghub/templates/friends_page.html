@@ -2,7 +2,11 @@
 {% block title %}{{ username }}'s following{% endblock %}
 {% block head %}{{ username }}'s following{% endblock %}
 {% block content%}
-  <h2>Following people List</h2>
+  <h2>Latest blogposts from those people</h2>
+  {% include "blogpost_list.html" %}
+{% endblock %}
+{% block rcontent %}
+  <h2>Following people</h2>
   {% if following_people %}
     <ul class="friends">
       {% for people in following_people %}
@@ -10,8 +14,6 @@
       {% endfor %}
     </ul>
   {% else %}
-  	<p>No following people found.</p>
+    <p>No following people found.</p>
   {% endif %}
-  <h2>Latest following people blogposts</h2>
-  {% include "blogpost_list.html" %}
 {% endblock %}

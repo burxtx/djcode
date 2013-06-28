@@ -14,7 +14,11 @@
             <label for="id_comment">Comment</label>
             <textarea id="id_comment" rows="10" cols="40" name="comment"></textarea>
             <input type="hidden" name="next" value="{% url blogpost_detail blogpost.id %}" />
-            <input class='submit-post' name="submit" value="Post" type="submit" />
+            <div class="control-group">
+                <div class="controls">
+                    <input class='submit-post' name="submit" value="Post" type="submit" />
+                </div>
+            </div>
             </form>
 {% else %}
 <!-- name, email and comment are visible -->

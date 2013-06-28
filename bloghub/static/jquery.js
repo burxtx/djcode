@@ -11,6 +11,8 @@
  *
  * Date: Tue Nov 13 2012 08:20:33 GMT-0500 (Eastern Standard Time)
  */
+
+jQuery(".tm-input").tagsManager();
 (function( window, undefined ) {
 var
 	// A central reference to the root jQuery(document)

@@ -17,7 +17,7 @@
   {% endif %}
   {% if user.id == blogpost.user_id%}
     {% include "ratings.html" %}
-    <p>You cannot rate your own blog</p>
+    <!-- <p>You cannot rate your own blog</p> -->
   {% else %}
     {% include "ratings.html" %}
     {% include "ratings_form.html" %}
