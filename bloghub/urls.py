@@ -23,10 +23,12 @@ urlpatterns = patterns('',
     # Browsing
     (r'^$', main_page),
     (r'^user/(\w+)/$', user_page),
+    (r'^user/(\w+)/draft/$', draft_page),
     (r'^tag/([^\s]+)/$', tag_page),
     # (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
     url(r'^blogpost/(\d+)/$', blogpost_detail_page, name="blogpost_detail"),
+    url(r'^draft/(\d+)/$', draft_detail_page, name="draft_detail"),
     # Session management
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', name="login_page"),
     url(r'^accounts/logout/$', logout_page, name="logout_page"),

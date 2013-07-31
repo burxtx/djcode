@@ -8,7 +8,7 @@
       <div class="post-tags">
         {% for tag in blogpost.tag_set.all %}
           <div class="post-tag">
-            <a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">#{{ tag.name }}</a>
+            #<a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
           </div>
         {% endfor %}
       </div>

@@ -43,7 +43,7 @@ class BlogPostSaveForm(forms.Form):
         widget=forms.Textarea())
     tags = forms.CharField(
         # label='Tags',
-        required = False,
+        required = True,
         widget = forms.TextInput(attrs={'rows': 3}))
 
 class SearchForm(forms.Form):

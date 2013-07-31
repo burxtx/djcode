@@ -3,4 +3,12 @@
 3. 登录后主页显示friends latest blog, 左侧显示标签云
 4. 已登录用户访问登陆页面，显示您已经登陆，不用重新登陆。
 5. 自己不能follow自己
-6. 用户动作美化
+6. follow tag
+6.1 follow collection
+6.2 创建新的collection
+6.2.1 collection 图片
+7. 保存到 draft 功能--Done
+8. user profile page
+9. 修改post时，tag也要被更新--Done
+10. search 只对注册用户开发
+11. draft publish之后，不能再访问该draft post

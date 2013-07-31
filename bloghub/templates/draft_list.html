@@ -1,0 +1,29 @@
+{% if drafts %}
+  <div class="post-bucket">
+    {% for draft in drafts %}
+      <div class="post-item">
+        <h3 class="post-item-title">
+        <a href="/draft/{{ draft.id }}" class="title">{{ draft.title }}</a></h3>
+        {% if show_body %}
+          {{ draft.body|safe|truncatewords_html:20 }}<a href="/draft/{{ draft.id }}">Read more...</a>
+        {% endif%}
+        <br />
+        {% if show_tags %}
+          {% if draft.tag_set.all %}
+            <div class="post-tags">
+              {% for tag in draft.tag_set.all %}
+                <div class="post-tag">
+                  #<a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+          {% endif %}
+        {% endif %}
+      </div>
+      <hr />
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No draft.</p>
+{% endif %}
