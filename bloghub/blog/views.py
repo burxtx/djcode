@@ -190,6 +190,14 @@ def tag_page(request, tag_name):
 
 # def tag_cloud_page(request):
 def main_page(request):
+    import recommendations as rec
+    # recommended posts
+    # get user data
+    username = request.GET['username']
+    user = get_object_or_404(User, username=username)
+
+    # recommended persons
+
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
