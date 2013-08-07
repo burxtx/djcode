@@ -9,7 +9,7 @@ from blog.models import *
 from django.contrib.auth.decorators import login_required
 import pdb
 
-from ratings.handlers import ratings
+from ratings.handlers import ratings, RatingHandler
 from ratings.forms import StarVoteForm, SliderVoteForm
 ratings.register(BlogPost, form_class=StarVoteForm)
 pdb.set_trace()
@@ -189,15 +189,16 @@ def tag_page(request, tag_name):
     return render_to_response('tag_page.html', variables)
 
 # def tag_cloud_page(request):
+@login_required
 def main_page(request):
-    import recommendations as rec
+    # import recommendations as rec
     # recommended posts
     # get user data
-    username = request.GET['username']
-    user = get_object_or_404(User, username=username)
-
+    user = request.user
+    others = User.objects.filter().exclude(username=user)
+    for other in others:
+        post_voted = RatingHandler.get_vote(other)
     # recommended persons
-
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
