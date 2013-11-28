@@ -4,30 +4,37 @@
 {% block subhead %}See what we recommend{% endblock %}
 {% block content%}
   {% if user.username %}
-	
-  <div class="row-fluid">
-    <div class="span12">
-      Recommended content
-    </div>
-  </div>
-  <div class="row-fluid">
-    <div class="span12">
-      <div id="tag-cloud">
-        {% for tag in tags %}
-          <a href="/tag/{{ tag.name }}" class="tag-cloud-{{ tag.weight }}">
-            {{ tag.name }}</a>
-        {% endfor %}
+      {% include "blogpost_list.html" %}
+    <div class="row-fluid">
+      <div class="span12">
+        Recommended content      
       </div>
-      <!-- Fluid 12
-      <div class="row-fluid">
-        <div class="span6">hello</div>
-        <div class="span6">world</div>
-      </div> -->
     </div>
-  </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="tag-cloud">
+          {% for tag in tags %}
+            <a href="/tag/{{ tag.name }}" class="tag-cloud-{{ tag.weight }}">
+              {{ tag.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   {% else %}
   	<p>Welcome anonymnous user!
   	You need to <a href="{% url login_page %}?next=/">login</a>
   	before you can store and share blogs.</p>
+  {% endif %}
+{% endblock %}
+{% block rcontent %}
+  <h2>Following people</h2>
+  {% if following_people %}
+    <ul class="friends">
+      {% for people in following_people %}
+        <li><a href="/user/{{ people.username }}/">{{ people.username }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No following people found.</p>
   {% endif %}
 {% endblock %}

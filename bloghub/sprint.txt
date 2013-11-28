@@ -12,3 +12,4 @@
 9. 修改post时，tag也要被更新--Done
 10. search 只对注册用户开发
 11. draft publish之后，不能再访问该draft post
+12. draft back button issue, should not publish blog, and lost body

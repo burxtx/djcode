@@ -11,7 +11,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>{% block title %}{% endblock %} | Bloghub</title>
+  <title>{% block title %}{% endblock %} | Hashky</title>
   
   <!-- Included CSS Files (Uncompressed) -->
   <!--
@@ -46,24 +46,24 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="brand" href="/">bloghub</a>
+        <a class="brand" href="/">Hashky</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li class="">
-              <a href="/">home</a>
+              <a href="/">Home</a>
             </li>
             {% if user.is_authenticated %}
               <li class="">
-                <a href="/save/">submit</a>
+                <a href="/save/">New</a>
               </li>
               <li class="">
-                <a href="/search/">search</a>
+                <a href="/search/">Search</a>
               </li>
               <li class="">
                 <a href="/user/{{ user.username }}/">{{ user.username }}</a>
               </li>
               <li class="">
-                <a href="{% url logout_page %}">logout</a>
+                <a href="{% url logout_page %}">Logout</a>
               </li>
               <li class="">
                 <form class="navbar-search pull-right">
@@ -80,7 +80,7 @@
                 {% endif %}
               </li>
               <li class="">
-                <a href="/register/">register</a>
+                <a href="/register/">sign up</a>
               </li>
             {% endif %}
           </ul>

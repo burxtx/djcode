@@ -2,6 +2,7 @@ import re
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
+from pagedown.widgets import PagedownWidget
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=20)
@@ -40,7 +41,8 @@ class BlogPostSaveForm(forms.Form):
         widget = forms.TextInput(attrs={'size': 128}))
     body = forms.CharField(
         # label='Post', 
-        widget=forms.Textarea())
+        # widget=forms.Textarea())
+        widget=PagedownWidget())
     tags = forms.CharField(
         # label='Tags',
         required = True,

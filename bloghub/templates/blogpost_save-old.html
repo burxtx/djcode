@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block external %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.ui.autocomplete.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.tagsinput.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.autocomplete.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tagsinput.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/tag_autocomplete.js"></script>
+    <script type="text/javascript">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "advanced",
+        theme_advanced_resizing : true
+    });
+    $('#tags').tagsInput();
+    </script>
+{% endblock %}
+{% block title %}Save blog post{% endblock %}
+{% block head %}Save blog post{% endblock %}
+{% block subhead %}Express your interest{% endblock %}
+{% block content %}
+
+<form class="form-horizontal" method="post" action=".">
+	<div class="control-group">
+		<label class="control-label" for="id_username">Title:</label>
+    		<div class="controls">
+    			{{ form.title }}
+    		</div>
+    </div>
+    <div class="control-group">
+		<label class="control-label" for="id_post">Post:</label>
+			<div class="controls">
+				{{ form.body }}
+    		</div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="id_tag">Tag:</label>
+            <div class="controls">
+                {{ form.tags }}
+                <!-- <input type="text" name="tags" placeholder="Tags" class="tm-input"/> -->
+            </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-warning">Save as draft</button>
+        </div>
+    </div>
+    <!-- <input type="submit" value="save" /> -->
+</form>
+{% endblock %}

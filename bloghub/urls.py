@@ -3,6 +3,8 @@ from bloghub.blog.views import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import os.path
+from django.views.generic import FormView
+from blog.forms import BlogPostSaveForm
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -50,10 +52,14 @@ urlpatterns = patterns('',
     # url(r'^blogpost/edit/$', blogpost_save_page, name="blogpost_update"),
     # Friends
     (r'^following/(\w+)/$', friends_page),
-    (r'^friend/add/$', friend_add),
+    (r'^friend/add/(?P<username>\w+)/$', friend_add),
+    (r'^friend/remove/$', friend_remove),
     # django comments
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^ratings/', include('ratings.urls')),
     (r'^ajax/tag/autocomplete/$', ajax_tag_autocomplete),
+    url(r'^$', FormView.as_view(
+        template_name="blogpost_detail.html",
+        form_class=BlogPostSaveForm)),
 )
 urlpatterns += staticfiles_urlpatterns()

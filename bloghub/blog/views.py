@@ -8,9 +8,10 @@ from blog.forms import *
 from blog.models import *
 from django.contrib.auth.decorators import login_required
 import pdb
-
+from django.utils import simplejson
 from ratings.handlers import ratings, RatingHandler
 from ratings.forms import StarVoteForm, SliderVoteForm
+from ratings.models import Vote
 ratings.register(BlogPost, form_class=StarVoteForm)
 pdb.set_trace()
 ##def blog(request):
@@ -121,33 +122,37 @@ def _blogpost_save(request, form, status, id=None):
     blogpost.title = form.cleaned_data['title']
     if not created:
         blogpost.tag_set.clear()
-    tag_names = form.cleaned_data['tags'].split()
+    tag_names = form.cleaned_data['tags'].split(',')
     blogpost.status = status
     for tag_name in tag_names:
         tag, dummy = Tag.objects.get_or_create(name=tag_name)
         blogpost.tag_set.add(tag)
     blogpost.save()
     return blogpost
-
+# title = request.POST['title']
+#         body = request.POST['title']
+#         tags = request.POST['hidden-tags']
 @login_required
 def blogpost_save_page(request, id=None):
-    if request.method == 'POST' and "submit_live" in request.POST:
-        form = BlogPostSaveForm(request.POST)
-        if form.is_valid():
-            blogpost = _blogpost_save(request, form, BlogPost.LIVE_STATUS, id)
-            return HttpResponseRedirect(
-                '/user/%s/' % request.user.username
-                # '/blogpost/%s/' % id
-            )
-    # handle draft
-    if request.method == 'POST' and "submit_draft" in request.POST:
-        form = BlogPostSaveForm(request.POST)
-        if form.is_valid():
-            blogpost = _blogpost_save(request, form, BlogPost.DRAFT_STATUS, id)
-            return HttpResponseRedirect(
-                '/user/%s/draft/' % request.user.username
-                # '/blogpost/%s/' % id
-            )
+    if request.method == 'POST':
+        tmp_req = request.POST.copy()
+        tmp_req['tags'] = request.POST['hidden-tags']
+        form = BlogPostSaveForm(tmp_req)
+        if "submit_live" in request.POST:
+            if form.is_valid():
+                blogpost = _blogpost_save(request, form, BlogPost.LIVE_STATUS, id)
+                return HttpResponseRedirect(
+                    '/user/%s/' % request.user.username
+                    # '/blogpost/%s/' % id
+                )
+        # handle draft
+        if "submit_draft" in request.POST:
+            if form.is_valid():
+                blogpost = _blogpost_save(request, form, BlogPost.DRAFT_STATUS, id)
+                return HttpResponseRedirect(
+                    '/user/%s/draft/' % request.user.username
+                    # '/blogpost/%s/' % id
+                )
     elif request.method == 'GET' and id:
         try:
             blogpost = BlogPost.objects.get(
@@ -191,14 +196,32 @@ def tag_page(request, tag_name):
 # def tag_cloud_page(request):
 @login_required
 def main_page(request):
-    # import recommendations as rec
+    import recommendations as rec
     # recommended posts
     # get user data
     user = request.user
-    others = User.objects.filter().exclude(username=user)
-    for other in others:
-        post_voted = RatingHandler.get_vote(other)
-    # recommended persons
+    handler = ratings.get_handler(BlogPost)
+    # others = User.objects.filter().exclude(username=user)
+    # for test all users
+    users = User.objects.all()
+    critics = {}
+    for other in users:
+        scores = {}
+        for vote in ratings.get_votes_by(other):
+            scores[vote.content_object.title] = vote.score
+            # print "%s -> %s" % (vote.content_object.title, vote.score)
+        if scores != {}:
+            critics[other] = scores
+    print rec.getRecommendations(critics, user)
+        
+    # latest avtivities from following people
+    following_people = [followingship.followers for followingship in user.following_set.all()]
+    following_people_blogposts = BlogPost.objects.filter(
+        user__in=following_people,
+        status=BlogPost.LIVE_STATUS,
+        ).order_by('-id')
+
+
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
@@ -219,6 +242,12 @@ def main_page(request):
             MAX_WEIGHT * (tag.count - min_count) / range
             )
     variables = RequestContext(request, {
+        # 'username': user,
+        'following_people': following_people,
+        'blogposts': following_people_blogposts,
+        'show_tags': True,
+        'show_user': True,
+        'show_body': True,
         'tags': tags,
         })
     # return render_to_response('tag_cloud_page.html', variables)
@@ -269,15 +298,35 @@ def friends_page(request, username):
 
 @login_required
 def friend_add(request):
+    # if 'username' in request.GET:
+    #     friend = get_object_or_404(
+    #         User, username=request.GET['username'])
+    #     followingship, is_following = Followingship.objects.get_or_create(
+    #         following=request.user,
+    #         followers=friend)
+    #     return HttpResponseRedirect(
+    #         '/following/%s/' % request.user.username)
+    # else:
+    #     raise Http404
+
     if 'username' in request.GET:
         friend = get_object_or_404(
             User, username=request.GET['username'])
-        followingship = Followingship(
+        followingship, is_following = Followingship.objects.get_or_create(
             following=request.user,
             followers=friend)
-        followingship.save()
-        return HttpResponseRedirect(
-            '/following/%s/' % request.user.username)
+        results={'success': True}
+        json = simplejson.dumps(results)
+        # return HttpResponse()
+        return HttpResponse(json, mimetype='application/json')
+    else:
+        raise Http404
+
+def friend_remove(request):
+    if 'username' in request.GET:
+        friend = get_object_or_404(User, username=request.GET['username'])
+        followingship = Followingship.objects.filter(following=request.user, followers=friend).delete()
+        return HttpResponse()
     else:
         raise Http404
 

@@ -1,46 +1,72 @@
 {% extends "base.html" %}
 {% block external %}
+    {{ form.media }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.ui.autocomplete.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.tagsinput.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}tagmanager/tagmanager.css">
+    <!-- <link rel="stylesheet" href="{{ STATIC_URL }}jQuery-Tags-Input/jquery.tagsinput.css"> -->
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.autocomplete.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tagsinput.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/tag_autocomplete.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}tagmanager/tagmanager.js"></script>
+    <!--<script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>-->
+    <!--<script type="text/javascript" src="{{ STATIC_URL }}jQuery-Tags-Input/jquery.tagsinput.js"></script>-->
+    <!--<script type="text/javascript" src="{{ STATIC_URL }}js/tag_autocomplete.js"></script>-->
     <script type="text/javascript">
-    tinyMCE.init({
-        mode: "textareas",
-        theme: "advanced",
-        theme_advanced_resizing : true
-    });
-    $('#tags').tagsInput();
+        // jQuery(".tm-input").tagsManager();
+    // tinyMCE.init({
+    //     mode: "textareas",
+    //     theme: "advanced",
+    //     theme_advanced_resizing : true
+    // });
+    // $(document).ready(function(){
+    //     // $('#tags').tagsInput();
+    //     $('.tm-input').tagsManager({
+    //          // hiddenTagListId: 'hidden_tags'
+    //     });
+    //     // $('#id_tags').tagsManager();
+    //     // });
+    //     $('#btn').click(function(){
+    //         $('#tags').val($(':hidden_tags').val());
+    //     });
+    // });
+        $(function(){
+            $('.tm-input').tagsManager({
+                // hiddenTagListId: 'hidden_tags'
+            });
+        });
+        // $('button').click(function(){
+        //     $('#tags').val($("[name='hidden-tags']").val());
+        // });
     </script>
 {% endblock %}
-{% block title %}Save blog post{% endblock %}
-{% block head %}Save blog post{% endblock %}
-{% block subhead %}Share your opinions{% endblock %}
+{% block title %}New shares{% endblock %}
+{% block head %}Share new{% endblock %}
+{% block subhead %}{% endblock %}
 {% block content %}
 <div class="shortcuts">
     <a href="/user/{{ user }}/" class="username">My posts</a>
     <a href="/user/{{ user }}/draft" class="username">My drafts</a>
 </div>
 <form class="form-horizontal" method="post" action=".">
+    {{ form.non_field_errors }}
 	<div class="control-group">
+    {{ form.title.errors }}
 		<label class="control-label" for="id_username">Title:</label>
     		<div class="controls">
     			{{ form.title }}
     		</div>
     </div>
     <div class="control-group">
+    {{ form.body.errors }}
 		<label class="control-label" for="id_post">Post:</label>
 			<div class="controls">
 				{{ form.body }}
     		</div>
     </div>
     <div class="control-group">
+    {{ form.tags.errors }}
         <label class="control-label" for="id_tag">Tag:</label>
             <div class="controls">
-                {{ form.tags }}
-                <!-- <input type="text" name="tags" placeholder="Tags" class="tm-input"/> -->
+                <!-- {{ form.tags }} -->
+                <input name="tags" id="tags" type="text" placeholder="Input tags..." class="tm-input" />
             </div>
     </div>
     <div class="control-group">
