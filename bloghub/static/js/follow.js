@@ -1,14 +1,33 @@
 function btnChange(){
-	$(".btn.icon.follow").css("background","green")
-	$(".btn.icon.follow").attr("text","Unfollow")
+	if ($("a").hasClass("follow")){
+		// $(".follow").on("click", function(){
+		// 	$(this).css("background-color", "red");
+		// });
+		// $(".btn.icon.follow").replaceWith($(".btn.icon.unfollow"))
+		$(".follow").replaceWith('<a class="btn unfollow" href="javascript:void(0)">Unfollow</a>')
+	}else{
+		// $(".unfollow").on('click', function(){
+		// 	$(this).css("background-color", "green");
+		// });
+		// $(".btn.icon.unfollow").replaceWith($(".btn.icon.follow"))
+		$(".unfollow").replaceWith('<a class="btn btn-success follow" href="javascript:void(0)">Follow</a>')
+	}
 }
 
 $(document).ready(function(){
-	$(".btn.icon.follow").click(function(){
+	$(document).on("click", ".follow", function(){
 		var url = "/friend/add/";
-		var	username = $("div").data("username");
+		var	username = $("body").data("username");
 		var	data = {
 				"username": username
+			};
+		$.get(url, data, btnChange());
+	});
+	$(document).on("click", ".unfollow", function(){
+		var url = "/friend/remove/";
+		var	username = $("body").data("username");
+		var	data = {
+				"username": username,
 			};
 		$.get(url, data, btnChange());
 	});

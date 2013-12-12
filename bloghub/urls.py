@@ -52,7 +52,7 @@ urlpatterns = patterns('',
     # url(r'^blogpost/edit/$', blogpost_save_page, name="blogpost_update"),
     # Friends
     (r'^following/(\w+)/$', friends_page),
-    (r'^friend/add/(?P<username>\w+)/$', friend_add),
+    (r'^friend/add/$', friend_add),
     (r'^friend/remove/$', friend_remove),
     # django comments
     (r'^comments/', include('django.contrib.comments.urls')),

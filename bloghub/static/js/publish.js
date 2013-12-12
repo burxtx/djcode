@@ -36,7 +36,7 @@ $(document).ready(function(){
                 return this.text;
             }).get();
             url = $("#publish").attr('action');
-        $.post(url,{'title': title,
+        $.post(url, {'title': title,
                     'body': body,
                     'tags': tags,
                     'csrfmiddlewaretoken': csrftoken

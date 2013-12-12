@@ -5,7 +5,7 @@
 	<script src="{{ STATIC_URL }}js/publish.js"></script>
 {% endblock %}
 {% block content %}
-	{{ draft.body|safe }}
+	<p>{{ draft.body|safe }}</p>
 	{% for tag in draft.tag_set.all %}
 		<div class="post-tag">
 			#<a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
@@ -14,7 +14,7 @@
 	<div class="control-group">
         <div class="controls">
 			<button action="/blogpost/{{ draft.id }}/" id="publish" name="submit_live" value="submit" type="submit" class="btn btn-success">Publish</button>
-			<button name="submit_draft" value="back" type="submit" class="btn" onclick="goBack()" >Back</button>
+			<button name="back" value="back" type="submit" class="btn" onclick="goBack()" >Back</button>
 			<a href="{% url blogpost_update draft.id %}" class="post-edit">[edit]</a>
 		</div>
     </div>

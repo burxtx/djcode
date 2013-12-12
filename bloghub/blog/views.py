@@ -310,8 +310,7 @@ def friend_add(request):
     #     raise Http404
 
     if 'username' in request.GET:
-        friend = get_object_or_404(
-            User, username=request.GET['username'])
+        friend = get_object_or_404(User, username=request.GET['username'])
         followingship, is_following = Followingship.objects.get_or_create(
             following=request.user,
             followers=friend)
@@ -322,11 +321,17 @@ def friend_add(request):
     else:
         raise Http404
 
+@login_required
 def friend_remove(request):
     if 'username' in request.GET:
         friend = get_object_or_404(User, username=request.GET['username'])
-        followingship = Followingship.objects.filter(following=request.user, followers=friend).delete()
-        return HttpResponse()
+        followingship = Followingship.objects.filter(
+            following=request.user, 
+            followers=friend).delete()
+        results={'success': True}
+        json = simplejson.dumps(results)
+        # return HttpResponse()
+        return HttpResponse(json, mimetype='application/json')
     else:
         raise Http404
 
