@@ -24,8 +24,8 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     # Browsing
     (r'^$', main_page),
-    (r'^user/(\w+)/$', user_page),
-    (r'^user/(\w+)/draft/$', draft_page),
+    url(r'^user/(\w+)/$', user_page, name="user_page"),
+    url(r'^user/(\w+)/draft/$', draft_page, name="draft_page"),
     (r'^tag/([^\s]+)/$', tag_page),
     # (r'^tag/$', tag_cloud_page),
     (r'^search/$', search_page),
@@ -48,6 +48,8 @@ urlpatterns = patterns('',
     # Account management
     url(r'^save/$', blogpost_save_page, name="blogpost_save"),
     url(r'^blogpost/edit/(\d+)/$', blogpost_save_page, name="blogpost_update"),
+    url(r'^blogpost/delete/(\d+)/$', blogpost_delete, name="blogpost_delete"),
+    # url(r'^blogpost/delete/$', blogpost_delete, name="blogpost_delete"),
     # if there is no parameters from security respect? 
     # url(r'^blogpost/edit/$', blogpost_save_page, name="blogpost_update"),
     # Friends

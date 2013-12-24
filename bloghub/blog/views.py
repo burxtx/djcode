@@ -12,6 +12,8 @@ from django.utils import simplejson
 from ratings.handlers import ratings, RatingHandler
 from ratings.forms import StarVoteForm, SliderVoteForm
 from ratings.models import Vote
+from django.core.urlresolvers import reverse
+
 ratings.register(BlogPost, form_class=StarVoteForm)
 pdb.set_trace()
 ##def blog(request):
@@ -60,10 +62,15 @@ def draft_page(request, username):
 def blogpost_detail_page(request, blogpost_id):
     if request.method == 'GET':
         blogpost = get_object_or_404(BlogPost, pk=blogpost_id)
+        if blogpost:
+            # cannot use _set query, because user and blogpost is not manytomany relationship
+            # username = blogpost.user_set.all().values("username")[0]["username"]
+            username = blogpost.user.username
         variables = RequestContext(request,{
             'blogpost': blogpost,
             'show_tags': True,
             'show_body': True,
+            'show_edit': username==request.user.username,
             })
         return render_to_response('blogpost_detail.html', variables)
     elif request.method == 'POST':
@@ -78,6 +85,7 @@ def blogpost_detail_page(request, blogpost_id):
             blogpost.tag_set.add(tag)
         blogpost.save()
         # return HttpResponseRedirect('/user/%s/' % request.user.username)
+        # return HttpResponseRedirect(reverse('blogpost_detail_page', args=[blogpost_id]))
         return HttpResponseRedirect('/blogpost/%s/' % blogpost_id)
 
 def draft_detail_page(request, blogpost_id):
@@ -142,6 +150,7 @@ def blogpost_save_page(request, id=None):
             if form.is_valid():
                 blogpost = _blogpost_save(request, form, BlogPost.LIVE_STATUS, id)
                 return HttpResponseRedirect(
+                    # reverse('user_page', args=[request.user.username])
                     '/user/%s/' % request.user.username
                     # '/blogpost/%s/' % id
                 )
@@ -150,6 +159,7 @@ def blogpost_save_page(request, id=None):
             if form.is_valid():
                 blogpost = _blogpost_save(request, form, BlogPost.DRAFT_STATUS, id)
                 return HttpResponseRedirect(
+                    # reverse('draft_page', args=[request.user.username])
                     '/user/%s/draft/' % request.user.username
                     # '/blogpost/%s/' % id
                 )
@@ -167,6 +177,7 @@ def blogpost_save_page(request, id=None):
         except BlogPost.DoesNotExist:
             # restrict user to edit their own blogpost, 
             # so if others trying to access others' blog, force redirect to their own page.
+            # return HttpResponseRedirect(reverse('user_page', args=[request.user.username]))
             return HttpResponseRedirect('/user/%s/' % request.user.username)
         form = BlogPostSaveForm({
             'body': body,
@@ -180,6 +191,22 @@ def blogpost_save_page(request, id=None):
         'form':form
         })
     return render_to_response('blogpost_save.html', variables)
+
+@login_required
+def blogpost_delete(request, id=None):
+    username = request.user.username
+    blogpost = get_object_or_404(BlogPost, pk=id)
+    blogpost.delete()
+    results={'success': True}
+    json = simplejson.dumps(results)
+    # return HttpResponse()
+    # return HttpResponse(json, mimetype='application/json')
+    if request.is_ajax():
+        return HttpResponse(json, mimetype='application/json')
+    else:
+        return HttpResponseRedirect('/user/%s/' % username)
+    # return HttpResponseRedirect(reverse('user_page', args=(username,)))
+    # return HttpResponseRedirect('/user/%s/' % username)
 
 def tag_page(request, tag_name):
     tag = get_object_or_404(Tag, name=tag_name)

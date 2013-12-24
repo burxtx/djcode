@@ -1,3 +1,4 @@
+<script src="{{ STATIC_URL }}js/delete.js"></script>
 {% load markup %}
 {% if blogposts %}
   <div class="post-bucket">
@@ -16,9 +17,12 @@
           <div class="span9">
             {% if show_edit %}
             <!-- <a href="/save/?id={{ blogpost.id|urlencode }}" class="edit">[edit]</a> -->
-            <div class="post-controls">
-              <a href="{% url blogpost_update blogpost.id %}" class="post-edit">[edit]</a>
-            </div>
+              <div class="post-controls">
+                <a href="{% url blogpost_update blogpost.id %}" class="post tool edit">[edit]</a>
+              </div>
+              <div class="post-controls">
+                <a id="{{blogpost.id}}" href="javascript:void(0)" class="post tool delete">[delete]</a>
+              </div>
             {% endif %}
           </div>
         </div>
@@ -38,8 +42,8 @@
           {% else %}
           {% endif %}
         {% endif %}
-      </div>
       <hr />
+      </div>
     {% endfor %}
   </div>
 {% else %}
