@@ -2,6 +2,12 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+# class Profile(models.Model):
+# 	user = models.OneToOneField(User)
+# 	avatar = models.ImageField()
+# 	name = models.CharField()
+# 	description = models.TextField()
+
 class BlogPost(models.Model):
 	LIVE_STATUS = 1
 	DRAFT_STATUS = 2

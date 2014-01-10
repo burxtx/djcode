@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'ratings',
     'django.contrib.markup',
     'pagedown',
+    'wechat',
 )
 
 # A sample logging configuration. The only tangible logging

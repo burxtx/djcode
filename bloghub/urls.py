@@ -65,3 +65,8 @@ urlpatterns = patterns('',
         form_class=BlogPostSaveForm)),
 )
 urlpatterns += staticfiles_urlpatterns()
+urlpatterns += patterns('',
+    url(r'^wechat/',include('wechat.urls')),
+)
+
+
