@@ -8,9 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import models
 from rating.models import *
 from rating.forms import *
-import pdb
 
-pdb.set_trace()
 @login_required
 def add_rate(request):
 	if request.method == 'POST':

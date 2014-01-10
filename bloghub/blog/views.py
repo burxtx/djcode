@@ -15,7 +15,7 @@ from ratings.models import Vote
 from django.core.urlresolvers import reverse
 
 ratings.register(BlogPost, form_class=StarVoteForm)
-pdb.set_trace()
+#pdb.set_trace()
 ##def blog(request):
 ##    posts = BlogPost.objects.all()
 ##    return render_to_response('archive.html', locals())
