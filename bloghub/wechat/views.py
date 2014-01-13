@@ -1,7 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse
 import hashlib
-from django.views.decorators.csrf import csrf_exempt
 import pdb
 #pdb.set_trace()
 def checkSignature(request):
@@ -15,11 +14,11 @@ def checkSignature(request):
     tmplist.sort()
     tmpstr="%s%s%s"%tuple(tmplist)
     tmpstr=hashlib.sha1(tmpstr).hexdigest()
-    if tmpstr==signature:
+    if tmpstr == signature:
         return echostr
     else:
         return None
-
+from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def index(request):
     if request.method=='GET':
@@ -27,4 +26,3 @@ def index(request):
         return response
     else:
         return HttpResponse('Hello World')
-
