@@ -10,7 +10,7 @@ from rating.models import *
 from rating.forms import *
 import pdb
 
-pdb.set_trace()
+#pdb.set_trace()
 @login_required
 def add_rate(request):
 	if request.method == 'POST':
