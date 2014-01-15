@@ -22,7 +22,6 @@ def checkSignature(request):
     else:
         return None
 
-
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def index(request):
@@ -66,4 +65,3 @@ def msg_response(request):
     q_text = msg.get('Content', 'You input nothing')
     test_reply = q_text
     return get_reply(msg, test_reply)
-
