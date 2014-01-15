@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     'ratings',
     'django.contrib.markup',
     'pagedown',
-    'gunicorn',
+    # 'gunicorn',
     'wechat',
 )
 
