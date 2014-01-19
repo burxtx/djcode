@@ -6,6 +6,15 @@ import pdb
 import xml.etree.ElementTree as ET
 import time
 #pdb.set_trace()
+kwd_query = "##"
+buy = '0';sell = '1'
+main_menu = "To start pls input: [%s]Start to search products or to publish a sale" % kwd_query
+buy_sell = "input: [%s]buy [%s]sell" % (buy, sell)
+prd_name = "input product name"
+location = "send your location"
+photo = "send product photo"
+query_set={}
+
 def checkSignature(request):
     signature=request.GET.get('signature',None)
     timestamp=request.GET.get('timestamp',None)
@@ -62,6 +71,45 @@ def msg_response(request):
     raw_str = smart_str(request.raw_post_data)
     msg = parse_raw_xml(ET.fromstring(raw_str))
     # get text msg
-    q_text = msg.get('Content', 'You input nothing')
-    test_reply = q_text
-    return get_reply(msg, test_reply)
+    if msg['MsgType']=='text':
+        query = msg.get('Content', 'You input nothing')
+    return query_location(msg, query, query_set)
+
+def query_action(msg, query, query_set):
+    # query_set = {"func": 0, "prd_name": 1, "location": 2,}
+    if query == buy or query == sell:
+        query_set['func'] = query
+        reply = prd_name
+    else:
+        reply = buy_sell
+    return get_reply(msg, reply)
+
+def query_product(msg,query, query_set):
+    if query_set.has_key('func'):
+        if query!='':
+            query_set['product']=query
+            reply = location
+    else:
+        return query_action(msg,query, query_set)
+    return get_reply(msg,reply)
+
+def query_location(msg,query, query_set):
+    if query_set.has_key('product'):
+        if query!='':
+            query_set['location']=query
+            reply='Matching product...'
+    else:
+        return query_product(msg,query,query_set)
+    print query_set
+    return get_reply(msg,reply)
+
+# from blog.models import *
+# def submit_product(request, msg):
+#     product, created = Product.objects.get_or_create(user=)
+#     product.name = msg["FromUserName"]
+#     product.desc = desc_reply
+#     product.timestamp = str(int(time.time()))
+#     product.locationX = msg[]
+
+
+
