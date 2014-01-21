@@ -106,8 +106,10 @@ def msg_response(request):
 def query_action(msg, query):
     # if buy or sell
     global query_set
+    user = msg['FromUserName']
     if query == kwd['buy'] or query == kwd['sell']:
-        query_set['action'] = query
+        query_set[user] = {}
+        query_set[user]['action'] = query
         reply = note['product']
     #     # query db should start here
     #     return 
@@ -118,10 +120,11 @@ def query_action(msg, query):
 
 def query_product(msg,query):
     global query_set
-    if query_set.has_key('action'):
+    user = msg['FromUserName']
+    if query_set.has_key(user) and query_set[user].has_key('action'):
         #if product
         if type(query) is str:
-            query_set['product']=query
+            query_set[user]['product']=query
             reply = note['desc']
         else:
             reply = note['product']
@@ -132,9 +135,10 @@ def query_product(msg,query):
 
 def query_desc(msg, query):
     global query_set
-    if query_set.has_key('product'):
+    user = msg['FromUserName']
+    if query_set.has_key(user) and query_set[user].has_key('product'):
         if type(query) is str:
-            query_set['desc']=query
+            query_set[user]['desc']=query
             reply = note['price']
         else:
             reply = note['desc']
@@ -145,12 +149,13 @@ def query_desc(msg, query):
 
 def query_price(msg,query):
     global query_set
-    if query_set.has_key('desc'):
+    user = msg['FromUserName']
+    if query_set.has_key(user) and query_set[user].has_key('desc'):
         # pattern = re.compile('[0-9]+')
         # match = pattern.match(query)
         try:
             query = int(query)
-            query_set['price']=query
+            query_set[user]['price']=query
             reply = note['location']
         except:
             reply = note['price']
@@ -161,20 +166,21 @@ def query_price(msg,query):
 
 def query_location(msg, query):
     global query_set
+    user = msg['FromUserName']
     if query == kwd['reset']:
         reply = note['buy_sell']
-        if query_set != {}:
-            query_set={}
+        if query_set[user] != {}:
+            query_set[user]={}
     else:
-        if query_set.has_key('price'):
+        if query_set.has_key(user) and query_set[user].has_key('price'):
             # if location
             if msg['MsgType']=='location':
-                query_set['location']=query
+                query_set[user]['location']=query
                 reply = note['search']
                 #enter db operate
                 print query_set, 'one item is done!'
                 reply_result(msg,'a reply')
-                query_set = {}
+                query_set[user] = {}
             else:
                 reply = note['location']
         
