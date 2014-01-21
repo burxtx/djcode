@@ -11,12 +11,18 @@ class Product(models.Model):
     )
     name = models.CharField(max_length=150)
     desc = models.TextField()
+    price = models.IntegerField()
     timestamp = models.DateTimeField()
-    # user = models.ForeignKey(User)
-    user = models.CharField(max_length=150)
-    locationX = models.FloatField()
-    locationY = models.FloatField()
+    user = models.ForeignKey(User)
     status = models.IntegerField(choices=STATUS_CHOICES, default=SALE)
-    def __str__(self):
-        return '%s, %s' % (self.user.username, self.title)
 
+class Photo(models.Model):
+    product = models.ForeignKey(Product)
+    picurl = models.URLField()
+    mediaid = models.CharField(max_length=150)
+
+class Location(models.Model):
+    product = models.ForeignKey(Product)
+    x = models.FloatField()
+    y = models.FloatField()
+    label = models.CharField(max_length=150)
