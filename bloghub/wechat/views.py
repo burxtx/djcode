@@ -66,14 +66,14 @@ def parse_raw_xml(root_elem):
     return msg
 
 def get_reply(msg, reply):
-    text_tpl = "\
-    <xml>\
-    <ToUserName><![CDATA[%s]]></ToUserName>\
-    <FromUserName><![CDATA[%s]]></FromUserName>\
-    <CreateTime>%s</CreateTime>\
-    <MsgType><![CDATA[%s]]></MsgType>\
-    <Content><![CDATA[%s]]></Content>\
-    </xml>"
+    text_tpl = '''
+    <xml>
+    <ToUserName><![CDATA[%s]]></ToUserName>
+    <FromUserName><![CDATA[%s]]></FromUserName>
+    <CreateTime>%s</CreateTime>
+    <MsgType><![CDATA[%s]]></MsgType>
+    <Content><![CDATA[%s]]></Content>
+    </xml>'''
     reply_msg = text_tpl % (
         msg["FromUserName"],
         msg["ToUserName"],
@@ -82,9 +82,31 @@ def get_reply(msg, reply):
         reply)
     return reply_msg
 
-def reply_result(msg, reply):
+def get_reply_multimedia(msg, reply):
     # reply search product result
-    pass
+    multimedia_tpl = '''
+    <xml>
+    <ToUserName><![CDATA[%s]]></ToUserName>
+    <FromUserName><![CDATA[%s]]></FromUserName>
+    <CreateTime>%s</CreateTime>
+    <MsgType><![CDATA[%s]]></MsgType>
+    <ArticleCount>%s</ArticleCount>
+    <Articles>
+    <item>
+    <Title><![CDATA[title1]]></Title> 
+    <Description><![CDATA[description1]]></Description>
+    <PicUrl><![CDATA[picurl]]></PicUrl>
+    <Url><![CDATA[url]]></Url>
+    </item>
+    </Articles>
+    </xml>'''
+    reply_msg = multimedia_tpl % (
+        msg["FromUserName"],
+        msg["ToUserName"],
+        str(int(time.time())),
+        'news',
+        '1',)
+        # reply)
 
 def msg_response(request):
     # get request and parse raw xml
@@ -101,7 +123,7 @@ def msg_response(request):
         query_picurl = msg.get('PicUrl', "You didn't send a product photo")
         query_mediaid = msg.get('MediaId', "You didn't send a product photo")
         query=(query_picurl, query_mediaid)
-    return query_location(msg, query)
+    return query_photo(msg, query)
 
 def query_action(msg, query):
     # if buy or sell
@@ -151,8 +173,6 @@ def query_price(msg,query):
     global query_set
     user = msg['FromUserName']
     if query_set.has_key(user) and query_set[user].has_key('desc'):
-        # pattern = re.compile('[0-9]+')
-        # match = pattern.match(query)
         try:
             query = int(query)
             query_set[user]['price']=query
@@ -167,40 +187,58 @@ def query_price(msg,query):
 def query_location(msg, query):
     global query_set
     user = msg['FromUserName']
+    if query_set.has_key(user) and query_set[user].has_key('price'):
+        if msg['MsgType']=='location':
+            query_set[user]['location']=query
+            # if action is buy, terminate the process at send location step
+            if query_set[user]['action'] != kwd['buy']:
+                reply = note['photo']
+            else:
+                reply = note['search']
+                # enter db operate
+                print query_set, 'one item is done!'
+                get_reply_multimedia(msg, 'a media reply')
+                query_set[user] = {}
+                return get_reply(msg, reply)
+        else:
+            reply = note['location']
+    else:
+        return query_price(msg,query)
+    print query_set
+    return get_reply(msg,reply)
+
+def query_photo(msg, query):
+    global query_set
+    user = msg['FromUserName']
     if query == kwd['reset']:
         reply = note['buy_sell']
         if query_set[user] != {}:
             query_set[user]={}
     else:
-        if query_set.has_key(user) and query_set[user].has_key('price'):
-            # if location
-            if msg['MsgType']=='location':
-                query_set[user]['location']=query
+        if query_set.has_key(user) and query_set[user].has_key('location'):
+            if msg['MsgType'] == 'image':
+                query_set[user]['photo'] = query
                 reply = note['search']
-                #enter db operate
+                # enter db operate
                 print query_set, 'one item is done!'
-                reply_result(msg,'a reply')
+                get_reply_multimedia(msg, 'a media reply')
                 query_set[user] = {}
             else:
-                reply = note['location']
-        
+                reply = note['photo']
         else:
-            return query_price(msg,query)
+            return query_location(msg,query)
     print query_set
-    return get_reply(msg,reply)
+    return get_reply(msg, reply)
 
 # from wechat.models import *
-# def buy_product(query, query_set):
-#     product = Product.objects.filter(title__icontains=query)[:3]
+# def db_query(query, query_set):
+#     product = Product.objects.filter(title__icontains=query)
 
-# def action_index(query, query_set, msg):
-#     if query_set['action'] == '0':
-#         return buy_product(query, query_set)
-#     if query_set['action'] == '1':
-#         return sell_product(query, query_set)
-# def sell_product(request, msg):
-#     product, created = Product.objects.get_or_create(user=)
-#     product.name = msg["FromUserName"]
-#     product.desc = desc_reply
-#     product.timestamp = str(int(time.time()))
-#     product.locationX = msg[]
+# def db_write(request, msg, query_set):
+#     user = msg['FromUserName']
+#     create_time = msg['CreateTime']
+#     product, created = Product.objects.get_or_create(user=user)
+#     product.name = query_set[user]['product']
+#     product.desc = query_set[user]['desc']
+#     product.price = query_set[user]['price']
+#     product.timestamp = create_time
