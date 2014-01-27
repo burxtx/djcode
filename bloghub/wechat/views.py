@@ -305,5 +305,3 @@ def write_read_query_reply(msg):
     reply = product_db_query(msg)
     # return get_reply_multimedia(msg, reply)
     return get_reply(msg, reply)
-
-
