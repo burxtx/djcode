@@ -3,8 +3,8 @@
 {% block head %}{{ blogpost.title }}{% endblock %}
 {% load markup %}
 {% block content %}
-	{{ blogpost.body|markdown|safe }}
-	{% if show_tags %}
+  {{ blogpost.body|markdown|safe }}
+  {% if show_tags %}
     {% if blogpost.tag_set.all %}
       <div class="post-tags">
         {% for tag in blogpost.tag_set.all %}

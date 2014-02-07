@@ -2,7 +2,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.views import login
+from django.contrib.auth import logout
 from django.template import RequestContext
 from blog.forms import *
 from blog.models import *
@@ -13,7 +14,6 @@ from ratings.handlers import ratings, RatingHandler
 from ratings.forms import StarVoteForm, SliderVoteForm
 from ratings.models import Vote
 from django.core.urlresolvers import reverse
-
 ratings.register(BlogPost, form_class=StarVoteForm)
 #pdb.set_trace()
 ##def blog(request):
@@ -68,6 +68,8 @@ def blogpost_detail_page(request, blogpost_id):
             username = blogpost.user.username
         variables = RequestContext(request,{
             'blogpost': blogpost,
+            # rename template variable to reuse rating and comment apps
+            'object': blogpost,
             'show_tags': True,
             'show_body': True,
             'show_edit': username==request.user.username,
@@ -104,6 +106,12 @@ def draft_detail_page(request, blogpost_id):
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def login_page(request):
+    if request.method == 'POST':
+        if not request.POST.get('remember_me', None):
+            request.session.set_expiry(0)
+    return login(request)
 
 def register_page(request):
     if request.method == 'POST':

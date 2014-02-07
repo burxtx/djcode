@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^blogpost/(\d+)/$', blogpost_detail_page, name="blogpost_detail"),
     url(r'^draft/(\d+)/$', draft_detail_page, name="draft_detail"),
     # Session management
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login', name="login_page"),
+    url(r'^accounts/login/$', login_page, name="login_page"),
     url(r'^accounts/logout/$', logout_page, name="logout_page"),
     # (r'^site_media/(?P<path>.*)$', 'django.views.static.server',
     #     { 'document_root':site_media }),

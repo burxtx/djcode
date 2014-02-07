@@ -2,34 +2,34 @@
 {% block title %}User Login{% endblock %}
 {% block head %}User Login{% endblock %}
 {% block content %}
-	{% if form.has_errors %}
-		<p>Your username and password didn't match.
-			Please try again.</p>
-	{% endif %}
-	<form class="form-horizontal" method="post" action="" >
-		<div class="control-group">
-			<label class="control-label" for="id_username">Username:</label>
-			<div class="controls">
-				{{ form.username }}
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="id_password">Password:</label>
-			<div class="controls">
-				{{ form.password }}
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox">
-					<input type="checkbox"> Remember me
-				</label>
-				<button type="submit" class="btn" value="Login">Log in</button>
-				<!--following line is required for redirect-->
-				<!-- <input type="hidden" name="next" value="{{ next|escape }}" /> -->
-				<input type="hidden" name="next" value="{{ next }}" />
-			</div>
-		</div>
-		
-	</form>
+  {% if form.has_errors %}
+    <p>Your username and password didn't match.
+      Please try again.</p>
+  {% endif %}
+  <form class="form-horizontal" method="post" action="" >
+    <div class="control-group">
+      <label class="control-label" for="id_username">Username:</label>
+      <div class="controls">
+        {{ form.username }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="id_password">Password:</label>
+      <div class="controls">
+        {{ form.password }}
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" name="remember_me"> Remember me
+        </label>
+        <button type="submit" class="btn" value="Login">Log in</button>
+        <!--following line is required for redirect-->
+        <!-- <input type="hidden" name="next" value="{{ next|escape }}" /> -->
+        <input type="hidden" name="next" value="{{ next }}" />
+      </div>
+    </div>
+    
+  </form>
 {% endblock %}

@@ -6,7 +6,7 @@
 
 {% load ratings_tags %}
 
-{% get_rating_form for blogpost as rating_form %}
+{% get_rating_form for object as rating_form %}
 <form action="{% url ratings_vote %}" class="ratings" method="post">
     {% csrf_token %}
     {{ rating_form }}

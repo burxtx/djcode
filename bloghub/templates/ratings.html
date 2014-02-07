@@ -2,7 +2,7 @@
 
 {% load ratings_tags %}
 
-{% get_rating_score for blogpost as score %}
+{% get_rating_score for object as score %}
 {% if score %}
     Average score: {{ score.average|floatformat }}
     Number of votes: {{ score.num_votes }}

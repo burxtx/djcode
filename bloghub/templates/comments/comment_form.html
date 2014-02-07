@@ -1,7 +1,7 @@
 {% load comments %}
 
 {% if user.is_authenticated %}
-    {% get_comment_form for blogpost as form %}
+    {% get_comment_form for object as form %}
         <form action="{% comment_form_target %}" method="POST">
             {% csrf_token %}
             {{ form.object_pk }}
@@ -22,7 +22,7 @@
             </form>
 {% else %}
 <!-- name, email and comment are visible -->
-    {% get_comment_form for blogpost as form %}
+    {% get_comment_form for object as form %}
         <form action="{% comment_form_target %}" method="POST">
             {% csrf_token %}
             {{ form.object_pk }}

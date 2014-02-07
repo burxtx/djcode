@@ -1,20 +1,27 @@
 # coding: UTF-8
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.db import models
 
+class WechatUser(models.Model):
+    openid = models.CharField(max_length=150)
+    user = models.OneToOneField(User)
+
 class Product(models.Model):
-    SOLD = 0
-    SALE = 1
-    STATUS_CHOICES = (
-        (SOLD, 'sold'),
-        (SALE, 'sale'),
-    )
+    # BUY = '0'
+    # SELL = '1'
+    # DEAL = '2'
+    # STATUS_CHOICES = (
+    #     (BUY, 'buy'),
+    #     (SELL, 'sell'),
+    #     (DEAL, 'deal'),
+    # )
     name = models.CharField(max_length=150)
     desc = models.TextField()
     price = models.IntegerField()
     timestamp = models.DateTimeField()
-    user = models.ForeignKey(User)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=SALE)
+    user = models.ForeignKey(WechatUser)
+    status = models.CharField(max_length=1)
+    # status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=SELL)
 
 class Photo(models.Model):
     product = models.ForeignKey(Product)
