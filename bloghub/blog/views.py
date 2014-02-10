@@ -260,22 +260,25 @@ def main_page(request):
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
     # calculate tag, min and max counts.
-    min_count = max_count = tags[0].blogposts.count()
-    for tag in tags:
-        tag.count = tag.blogposts.count()
-        if tag.count < min_count:
-            min_count = tag.count
-        if max_count < tag.count:
-            max_count = tag.count
-    #calculate count range. Avoid dividing by zero.
-    range = float(max_count - min_count)
-    if range == 0.0:
-        range = 1.0
-    #calculate tag weights.
-    for tag in tags:
-        tag.weight = int(
-            MAX_WEIGHT * (tag.count - min_count) / range
-            )
+    if len(tags) != 0:
+        min_count = max_count = tags[0].blogposts.count()
+        for tag in tags:
+            tag.count = tag.blogposts.count()
+            if tag.count < min_count:
+                min_count = tag.count
+            if max_count < tag.count:
+                max_count = tag.count
+        #calculate count range. Avoid dividing by zero.
+        range = float(max_count - min_count)
+        if range == 0.0:
+            range = 1.0
+        #calculate tag weights.
+        for tag in tags:
+            tag.weight = int(
+                MAX_WEIGHT * (tag.count - min_count) / range
+                )
+    else:
+        tags = []
     variables = RequestContext(request, {
         # 'username': user,
         'following_people': following_people,

@@ -16,6 +16,8 @@
           {% for tag in tags %}
             <a href="/tag/{{ tag.name }}" class="tag-cloud-{{ tag.weight }}">
               {{ tag.name }}</a>
+          {% empty %}
+            Currently no tag!
           {% endfor %}
         </div>
       </div>

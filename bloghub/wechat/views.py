@@ -67,7 +67,7 @@ def checkSignature(request):
 
 def bind_wechat(request):
     if request.method == 'POST':
-        if request.session.has_key('openid') and request.session['openid'] == openid:
+        if request.session.has_key('openid') and request.session['openid'] == request.GET.get('openid', None):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
@@ -98,13 +98,13 @@ def bind_wechat(request):
         tmpstr="%s%s%s"%tuple(tmplist)
         tmpstr=hashlib.sha1(tmpstr).hexdigest()
         if tmpstr == signature:
-            if timestamp+3600 <= time.time():
+            if time.time() - int(timestamp) <= 1800:
                 # save openid to session
                 # Thanks to http://abyssly.com/2013/09/20/wx_bind/
                 if request.session.get('openid', False):
-                    return HttpResponse('Openid is not presented')
-                request.session['openid'] = openid
-                return render_to_response('registration/login.html')
+                    # return HttpResponse('Openid is not presented')
+                    request.session['openid'] = openid
+                return render_to_response('registration/bind_wechat.html')
             else:
                 return HttpResponse('Link expired, please send binding request again')
         else:
@@ -200,12 +200,12 @@ def msg_response(request):
             wechatuser = WechatUser.objects.get(openid=openid)
             if wechatuser.user == None:
                 bind_link = '<a href="http://www.hashky.com/wechat/binding/?openid=%s&timestamp=%s&signature=%s">Please bind with Hashky account<a/>'\
-                % (msg['openid'], time.time(), signature)
+                % (msg['openid'], timestamp, signature)
             else:
                 return get_reply(msg, 'Welcome back!')
         except:
             bind_link = '<a href="http://www.hashky.com/wechat/binding/?openid=%s&timestamp=%s&signature=%s">Please bind with Hashky account<a/>'\
-            % (openid, time.time(), signature)
+            % (openid, timestamp, signature)
         # send bind openid with system user request
         welcome = '''
         Hi, welcome to subscribe Hashky! To get a better service, please bind your WeChat account with Hashky account.
