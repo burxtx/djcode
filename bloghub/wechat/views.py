@@ -74,12 +74,12 @@ def bind_wechat(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    wechatuser = WeChat.objects.create(openid=request.session['openid'], user=user)
-                    if wechatuser is not None:
+                    wechatuser, created = WechatUser.objects.get_or_create(openid=request.session['openid'], user=user)
+                    if created:
                         # Redirect to a success page.
                         return HttpResponse('WeChat user is binded to Hashky successfully!')
                     else:
-                        return HttpResponse('Wechatuser bind to Hashky failed')
+                        return HttpResponse('WeChat user is already binded to a Hashky user')
                 else:
                     # Return a 'disabled account' error message
                     return HttpResponse('Disabled account!')
@@ -101,7 +101,7 @@ def bind_wechat(request):
             if time.time() - int(timestamp) <= 1800:
                 # save openid to session
                 # Thanks to http://abyssly.com/2013/09/20/wx_bind/
-                if request.session.get('openid', False):
+                if not request.session.get('openid', False):
                     # return HttpResponse('Openid is not presented')
                     request.session['openid'] = openid
                 return render_to_response('registration/bind_wechat.html')
@@ -211,6 +211,9 @@ def msg_response(request):
         Hi, welcome to subscribe Hashky! To get a better service, please bind your WeChat account with Hashky account.
         '''
         return get_reply(msg, welcome+bind_link)
+    elif msg['MsgType'] == 'event' and msg['Event'] == 'unsubscribe':
+        goodbye = "Please don't leave me..."
+        return get_reply(msg, goodbye)
     else:
         if msg['MsgType']=='text':
             query = msg.get('Content', 'You input nothing').strip()
