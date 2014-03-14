@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ username }}{% endblock %}
+{% block head %}Products for {{ username }}{% endblock %}
+{% block external %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("body").data("username", "{{username}}");
+  });
+</script>
+<script src="{{ STATIC_URL }}js/follow.js"></script>{% endblock %}
+{% block content %}
+  {% include "product_list.html" %}
+{% endblock %}
+{% block rcontent %}
+  {% ifequal user.username username %}
+    <a href="/following/{{ username }}/">people you are following...</a>
+    <a href="/tag-following/{{ username }}/">tags you are following...</a>
+  {% else %}
+    {% if is_following %}
+      <a class="btn unfollow" href="javascript:void(0)">Unfollow</a>
+    {% else %}
+      <!-- <a class="btn icon follow" href="/friend/add/?username={{ username }}">Follow</a> -->
+      <a class="btn btn-success follow" href="javascript:void(0)">Follow</a>
+    {% endif %}
+  {% endifequal %}
+{% endblock %}

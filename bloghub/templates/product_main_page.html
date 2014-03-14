@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Explore more products{% endblock %}
+{% block head %}Explore more products{% endblock %}
+{% block subhead %}See what we recommend{% endblock %}
+{% block content%}
+  {% if user.username %}
+      {% include "product_list.html" %}
+    <div class="row-fluid">
+      <div class="span12">
+        Recommended content      
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="tag-cloud">
+          {% for tag in tags %}
+            <a href="/tag/{{ tag.name }}" class="tag-cloud-{{ tag.weight }}">
+              {{ tag.name }}</a>
+          {% empty %}
+            Currently no tag!
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+  	<p>Welcome anonymnous user!
+  	You need to <a href="{% url login_page %}?next=/">login</a>
+  	before you can store and share products.</p>
+  {% endif %}
+{% endblock %}
+{% block rcontent %}
+  <h2>Following people</h2>
+  {% if following_people %}
+    <ul class="friends">
+      {% for people in following_people %}
+        <li><a href="/user/{{ people.username }}/">{{ people.username }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No following people found.</p>
+  {% endif %}
+{% endblock %}

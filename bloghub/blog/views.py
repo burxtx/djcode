@@ -15,7 +15,7 @@ from ratings.forms import StarVoteForm, SliderVoteForm
 from ratings.models import Vote
 from django.core.urlresolvers import reverse
 ratings.register(BlogPost, form_class=StarVoteForm)
-#pdb.set_trace()
+pdb.set_trace()
 ##def blog(request):
 ##    posts = BlogPost.objects.all()
 ##    return render_to_response('archive.html', locals())
@@ -235,18 +235,21 @@ def main_page(request):
     # recommended posts
     # get user data
     user = request.user
-    handler = ratings.get_handler(BlogPost)
+    blogpost = BlogPost.objects.latest('id')
+    handler = ratings.get_handler(blogpost)
     # others = User.objects.filter().exclude(username=user)
     # for test all users
     users = User.objects.all()
     critics = {}
     for other in users:
-        scores = {}
-        for vote in ratings.get_votes_by(other):
-            scores[vote.content_object.title] = vote.score
-            # print "%s -> %s" % (vote.content_object.title, vote.score)
-        if scores != {}:
-            critics[other] = scores
+        voted = handler.has_voted(blogpost,'main', other)
+        if voted:
+            scores = {}
+            for vote in ratings.get_votes_by(other):
+                scores[vote.content_object.title] = vote.score
+                # print "%s -> %s" % (vote.content_object.title, vote.score)
+            if scores != {}:
+                critics[other] = scores
     print rec.getRecommendations(critics, user)
         
     # latest avtivities from following people

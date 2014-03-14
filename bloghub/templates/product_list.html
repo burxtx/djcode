@@ -1,0 +1,53 @@
+<script src="{{ STATIC_URL }}js/delete.js"></script>
+{% load markup %}
+{% if products %}
+  <div class="post-bucket">
+    {% for product in products %}
+      <div class="span3">
+        <div class="post-item">
+          <h2 class="post-item-title">
+          <a href="/wechat/product/{{ product.id }}" class="title">{{ product.name }}</a></h2>
+          <div class="row">
+            <div class="span9">
+              {% if show_user %}
+                Posted by:  
+                <a href="/user/{{ product.user.username }}/" class="username">
+                {{ product.user.username }}</a>
+              {% endif %}
+            </div>
+            <div class="span9">
+              {% if show_edit %}
+              <!-- <a href="/save/?id={{ blogpost.id|urlencode }}" class="edit">[edit]</a> -->
+                <div class="post-controls">
+                  <a href="{% url blogpost_update blogpost.id %}" class="post tool edit">[edit]</a>
+                </div>
+                <div class="post-controls">
+                  <a id="{{blogpost.id}}" href="javascript:void(0)" class="post tool delete">[delete]</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          {% if show_body %}
+            {{ product.desc|markdown|safe|truncatewords_html:20 }}<a href="/wechat/product/{{ product.id }}">Read more...</a>
+          {% endif%}
+          <br />
+          <!-- {% if show_tags %}
+            {% if blogpost.tag_set.all %}
+              <div class="post-tags">
+                {% for tag in blogpost.tag_set.all %}
+                  <div class="post-tag">
+                    #<a class="post-tag" href="/tag/{{ tag.name|urlencode }}/">{{ tag.name }}</a>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+            {% endif %}
+          {% endif %} -->
+        <hr />
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No product found.</p>
+{% endif %}

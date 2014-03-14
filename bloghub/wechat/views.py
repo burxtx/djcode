@@ -19,6 +19,7 @@ from ratings.handlers import ratings, RatingHandler
 from ratings.forms import StarVoteForm, SliderVoteForm
 from ratings.models import Vote
 from django.core.urlresolvers import reverse
+from blog.models import *
 
 ratings.register(Product, form_class=StarVoteForm)
 #pdb.set_trace()
@@ -354,7 +355,7 @@ def product_db_query(msg):
         action = kwd['sell']
     else:
         action = kwd['buy']
-    query_wechatuser= WechatUser.objects.select_related().get(user=query_user)
+    query_wechatuser= WechatUser.objects.select_related().get(openid=query_user)
     products = Product.objects.filter(
         name__icontains=query_set[query_user]['product'],
         status=action
@@ -409,7 +410,7 @@ def product_db_write(msg):
     create_time = datetime.fromtimestamp(int(msg['CreateTime']))
     prd_name = query_set[user]['product']
     prd_price = query_set[user]['price']
-    wechatuser, created = WechatUser.objects.get_or_create(user=user)
+    wechatuser, created = WechatUser.objects.get_or_create(openid=user)
     product = Product.objects.create(user_id=wechatuser.id, 
         name=prd_name,
         price=prd_price,
@@ -458,3 +459,43 @@ def product_detail(request, product_id):
             'show_edit': username==request.user.username,
             })
         return render_to_response('product_detail.html', variables)
+
+def product_page(request, username):
+    user = get_object_or_404(User, username=username)
+    # blogposts = user.blogpost_set.order_by('-id')
+    wechatuser, created = WechatUser.objects.get_or_create(user=user.id)
+    products = Product.objects.get_or_create(status='0', user=wechatuser.id)
+    if request.user.is_authenticated():
+        is_following = Followingship.objects.filter(
+            following=request.user,
+            followers=user)
+    else:
+        is_following = False
+    variables = RequestContext(request, {
+        'username':username,
+        'products':products,
+        # 'show_tags': True,
+        'show_body': True,
+        # 'show_edit': username==request.user.username,
+        'is_following': is_following,
+        })
+    return render_to_response('product_page.html', variables)
+
+def product_main_page(request):
+    user = request.user
+    # latest avtivities from following people
+    following_people = [followingship.followers for followingship in user.following_set.all()]
+    following_people_blogposts = BlogPost.objects.filter(
+        user__in=following_people,
+        status=BlogPost.LIVE_STATUS,
+        ).order_by('-id')
+    variables = RequestContext(request, {
+        'username': user,
+        'following_people': following_people,
+        'blogposts': following_people_blogposts,
+        # 'show_tags': True,
+        'show_user': True,
+        'show_body': True,
+        # 'tags': tags,
+        })
+    return render_to_response('product_main_page.html', variables)
