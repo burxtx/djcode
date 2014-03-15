@@ -1,0 +1,3 @@
+[submodule "bloghub/static/tagmanager"]
+	path = bloghub/static/tagmanager
+	url = git@github.com:max-favilli/tagmanager.git
