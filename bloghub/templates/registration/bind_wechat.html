@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Hashky|Bind with WeChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->  
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+    <!-- Included JS Files (Compressed) -->
+    <script src="{{ STATIC_URL }}jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+  </head>
+  <body>
+    <h1>To bind with WeChat, please login.</h1>
+    {% if form.has_errors %}
+      <p>Your username and password didn't match.
+        Please try again.</p>
+    {% endif %}
+    <form class="form-horizontal" method="post" action="" >
+      <div class="control-group">
+        <label class="control-label" for="id_username">Username:</label>
+        <div class="controls">
+          <input type="text" name="username" id="inputEmail" placeholder="Email">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_password">Password:</label>
+        <div class="controls">
+          <input type="password" name="password" id="inputPassword" placeholder="Password">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn" value="Login">Log in</button>
+          <!--following line is required for redirect-->
+          <!-- <input type="hidden" name="next" value="{{ next|escape }}" /> -->
+          <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
+
+
