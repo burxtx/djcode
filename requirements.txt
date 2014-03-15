@@ -1,0 +1,2 @@
+django-pagedown
+django-generic-ratings
