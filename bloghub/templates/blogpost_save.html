@@ -46,6 +46,7 @@
     <a href="/user/{{ user }}/draft" class="username">My drafts</a>
 </div>
 <form class="form-horizontal" method="post" action=".">
+    {% csrf_token %}
     {{ form.non_field_errors }}
 	<div class="control-group">
     {{ form.title.errors }}

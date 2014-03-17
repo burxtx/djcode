@@ -99,7 +99,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # add follow line to resolve 403 error
-    'django.middleware.csrf.CsrfResponseMiddleware',
+    # 'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
 ROOT_URLCONF = 'bloghub.urls'

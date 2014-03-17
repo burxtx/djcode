@@ -1,2 +1,3 @@
+markdown
 django-pagedown
 django-generic-ratings
